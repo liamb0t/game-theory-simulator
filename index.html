@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="container">
+
+            <select id="selectGameMenu">
+                <option value="0">Prisoners Dilemma</option>
+                <option value="1">Rock Paper Scissors</option>
+                <option value="2">Segregation Model</option>
+            </select>
+            
+            <label for="payoff">Payoff</label>
+            <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff">
+            <p><span id="payoff-counter">0</span></p>
+           
+            <button id="play-button">Start</button>
+            <button id="pause-button">Pause game</button>
+            <button id="reset-button">Reset</button>
+
+            <button id="neumann-button">Neumann neighbours</button>
+            <button id="moore-button">Moore neighbours</button>
+
+            <button id="newBoard">Change board size</button>
+            
+            
+
+            <div id="draw-mode-container">
+                <button id="draw-button">Draw Mode</button>
+                <div>
+                    <img id="draw-mode-icon" src="img/draw-mode-icon-2.png" width="25" height="25">
+                </div>
+            </div>
+
+            <fieldset>
+                <legend>Adjust population density</legend>
+                    <label id="slider-1-label" for="slider-1">Cooperators</label>
+                    <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider1" name="pop-density-slider1">
+                    <p class="sliders"><span id="slider-1-value"></span></p>
+                    
+                    <label id="slider-2-label" for="slider-2">Defectors</label>
+                    <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider2" name="pop-density-slider2"> 
+                    <p class="sliders"><span id="slider-2-value"></span></p>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Adjust probabilities of biological rules</legend>
+                    <label id="slider-3-label" for="slider-3">Reproduction</label>
+                    <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider3" name="pop-density-slider3">
+                    <p class="sliders"><span id="slider-3-value"></span></p>
+
+                    <label id="slider-4-label" for="slider-4">Selection</label>
+                    <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider4" name="pop-density-slider4">
+                    <p class="sliders"><span id="slider-4-value"></span></p>
+
+                    <label id="slider-5-label" for="slider-5">Exchange</label>
+                    <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider5" name="pop-density-slider5">
+                    <p class="sliders"><span id="slider-5-value"></span></p>
+            <fieldset>
+
+            <legend>Select an update rule</legend>
+                <input type="radio" class='updateRulesBtns' id="updateRule1" name="updateButtons" value="0" checked="checked">
+                <label for="updateRule1">Deterministic</label>
+                
+                <input type="radio" class='updateRulesBtns' id="updateRule2" name="updateButtons" value="1">
+                <label for="updateRule2">Probalistic</label>
+                
+                <input type="radio" class='updateRulesBtns' id="updateRule3" name="updateButtons" value="2">
+                <label for="updateRule3">Biological</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Allow self interactions</legend>
+                    
+                    <input type="checkbox" id="selfInteractionsBtn">
+                    <label for="selfInteractionsBtn">Self-interactions</label>
+                
+            </fieldset>
+
+            <fieldset>
+                <legend>Segregation conditions</legend>
+                    <input type="number" id="minRangeCounter" min="0.0" max="1.0" step="0.05" placeholder="min range">
+                    <input type="number" id="maxRangeCounter" min="0.0" max="1.0" step="0.05" placeholder="max range">
+            </fieldset>
+            
+            
+            <h1 id="gen-counter">0</h1>
+        </div>
+        
+        <canvas id="canvas" width="1800" height="1000"></canvas>
+        <script src="helperFunctions.js"></script>
+        <script src="pd.js"></script>
+        <script src="rect.js"></script>
+        <script src="rps.js"></script>
+        <script src="index.js"></script>
+        <script src="schelling.js"></script>
+    </body>
+</html>

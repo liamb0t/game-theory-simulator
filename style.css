@@ -1,0 +1,23 @@
+#canvas {
+    background-color: #1C646D;
+    cursor: crosshair;
+}
+
+#container {
+    font-size: 10px;
+    font-family: 'Roboto', sans-serif;
+    color: rgb(163, 163, 163);
+    animation: fadein 1s;
+    position: absolute;
+    display: block;
+    width: auto;
+    height: auto;
+    background-color: #181818;
+    border: solid 1px rgb(121, 121, 121);
+}
+
+#draw-mode-container img {
+    width: 25;
+    height: 25;
+}
+
