@@ -8,6 +8,14 @@
   }
 
 
+#front-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 45px;
+    transform: translate(-50%, -50%);
+   
+}
 /***************
 THE GRID
 ***************/
@@ -23,14 +31,12 @@ THE EDITOR
 select {
     color: #d3d3d3;
     background-color: #1f0802;
-    border: 1px solid var(--select-border);
-    border-radius: 0.25em;
     padding: 0.25em 0.5em;
     font-family: myFirstFont;
     font-size: 1.25rem;
     cursor: pointer;
     line-height: 1.1;
-  }
+}
 
 #editor-container{
     color: white;
@@ -38,11 +44,43 @@ select {
 	min-width: 340px;
 	width: 20%;
 	height: 100%;
-
+    display: none;
 	position: absolute;
 	right: 0;
 
 	background: #1f0802;
+}
+
+#editor {
+	margin: 40px 40px 40px 20px;
+}
+
+
+
+#editor div.proportions{
+	overflow: hidden;
+}
+#editor div.proportions > div{
+	overflow: hidden;
+}
+#editor div.proportions > div > span{
+	width:1em;
+	height: 1em;
+	display: inline-block;
+	border-right: 1px solid #aaa;
+	padding-right: 5px;
+	margin-right: 5px;
+}
+#editor div.proportions > div > input[type=range]{
+	width: 230px;
+}
+
+#editor hr{
+	margin: 40px 0;
+    border: none;
+    height: 4px;
+    border-bottom: 1px solid #aaa;
+    border-top: 1px solid #aaa;
 }
 
 #editor-title{
@@ -105,6 +143,7 @@ THE PLAY CONTROLS
 ***************/
 
 #play-container{
+    display: none;
 	padding: 10px 0;
     width: 80%;
     height: 40px;
@@ -112,6 +151,18 @@ THE PLAY CONTROLS
     left: 0;
     bottom: 0;
     background-color: rgba(202, 17, 17, 0);
+}
+
+#play-container button{
+	color: #d3d3d3;
+    background-color: #1f0802;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-family: myFirstFont;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
 }
 
 #play-controls{

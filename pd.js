@@ -7,7 +7,7 @@ class PrisonersDilemma {
             'Du',
             'empty'
         ]
-        this.distributions = [0.1, 0.4];
+        this.distributions = [0, 0, 1];
         this.bioSettings = [0.1, 0.5, 0.4];
         this.payoffs = {
             'mutualCoop': 1,

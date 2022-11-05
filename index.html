@@ -4,8 +4,17 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div id="front-title">
+            <h1>
+                EVOLUTIONARY GAME THEORY SIMULATOR 
+            </h1>
+            <button id="open-page">Play</button>
+        </div>
         <div id="editor-container">
             <div id="editor">
+                <div id="editor-title">
+                    <span>THE GAME</span>
+                </div>
                 <p id="game-info-pd" class="game-info">The prisoner's dilemma is a paradox in decision analysis in which two individuals acting in their own self-interests do not produce the optimal outcome.
                     When space is introduced into the game and players are surrounded by neighbours, we see much more fairer outcomes!
                 </p>
@@ -41,7 +50,7 @@
                 </p>
                 <hr>
                 <div id="editor-title">
-                    <span>THINGS WITH RULES</span>
+                    <span>THE RULES</span>
                 </div>
                 <span>At the end of each generation, things update their strategies</span>
                 <select id="update-rules-menu">
@@ -52,29 +61,25 @@
                 <br>
                 <label for="payoff">Payoff</label>
                     <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff" class="sliders">
-                <p>These rules determine the probalility by which biolgical process a thing changes it's strategy.</p>
-                <div> 
-                    <label id="slider-3-label" for="slider-3" >Reproduction</label>
+                <p>These parameters determine the probalility by which biolgical process a thing changes it's strategy.</p>
+                <div class="proportions"> 
+                    <span>Reproduction</span>
                     <input type="range" min = "0" max = "1" step="0.01" id="bio-slider1" name="bio-slider1" class="sliders">
-                    <p ><span id="slider-3-value"></span></p>
 
-                    <label id="slider-4-label" for="slider-4" >Selection</label>
+                    <span>Selection</span>
                     <input type="range" min = "0" max = "1" step="0.01" id="bio-slider2" name="bio-slider2" class="sliders">
-                    <p ><span id="slider-4-value"></span></p>
 
-                    <label id="slider-5-label" for="slider-5" >Exchange</label>
+                    <span>Exchange</span>
                     <input type="range" min = "0" max = "1" step="0.01" id="bio-slider3" name="bio-slider3" class="sliders">
-                    <p ><span id="slider-5-value"></span></p>
-            
-                    
-                    <label for="selfInteractionsBtn">Things interact with themselves.</label>
+                </div>
+
+                <label for="selfInteractionsBtn">Things interact with themselves.</label>
                     <input type="checkbox" id="selfInteractionsBtn">
                     <br>
-                    <label id="slider-6-label" for="seg-threshold" >If the number of my neighbours are greater than, I will move to an empty cell. </label>
+                    <label id="slider-6-label" for="seg-threshold" >If the number of my neighbours who are the same as me are greater than, I will move to an empty cell. </label>
                     <input type="range" min = "0" max = "1" step="0.01" id="seg-threshold" name="seg-threshold" class="sliders">
                     <p ><span id="slider-6-value"></span></p>
                     <br>
-                </div>
                 <hr>
                 <div id="editor-title">
                     <span>THE WORLD</span>
@@ -95,10 +100,11 @@
                     </div>
                     <span>Each thing considers it's neighbours to be</span>
                     <select id="neighbours-menu">
-                        <option value="0">the 4 spots to it's sides</option>
-                        <option value="1">the 8 spots to it's sides and corners</option>
+                        <option value="0">the 4 cells to it's sides</option>
+                        <option value="1">the 8 cells to it's sides and corners</option>
                     </select>
                 </div>
+                <hr>
             </div>
         </div>
 
@@ -109,14 +115,12 @@
                 <select id="selectGameMenu">
                     <option value="0">Prisoners Dilemma</option>
                     <option value="1">Rock Paper Scissors</option>
-                    <option value="2">Segregation Model</option>
+                    <option value="2">Segregation</option>
                     <option value="3">Ultimatum Game</option>
                     <option value="4">Stag Hunt</option>
                     <option value="5">Hawk-Dove</option>
                 </select>
-                
                 <button id="pause-button">Pause game</button>
-                
                 <button id="draw-button">Draw Mode</button>
                 <div>
                     <img id="draw-mode-icon" src="img/draw-mode-icon-2.png" width="25" height="25">
@@ -124,6 +128,7 @@
                 <h1 id="gen-counter">0</h1>
             </div>
         </div>
+
 
         <div id="canvas-container">
             <canvas id="canvas" width="1800" height="1000"></canvas>

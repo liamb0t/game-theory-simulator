@@ -145,9 +145,6 @@ function updatePopulationDistribution(probabilities, strategies) {
     });
 }
 
-createGame();
-animate();
-
 document.querySelector('#play-button').onclick = function() {
     start = true;
     z = 2;
@@ -268,7 +265,7 @@ document.querySelector('#reset-button').onclick = function() {
     start = false;
     updatePopulationDistribution(game.distributions, game.stratArray);
 }
-
+//game select menu
 document.querySelector('#selectGameMenu').onchange = function() {
     let p;
     if (this.value == 0) {
@@ -311,3 +308,17 @@ document.querySelector('#selectGameMenu').onchange = function() {
     });
     p.style.display = 'block';
 }
+
+document.querySelector('#open-page').onclick = function() {
+    document.querySelector('#front-title').style.display = 'none';
+    document.querySelector('#editor-container').style.display = 'block';
+    document.querySelector('#play-container').style.display = 'block';
+    game.distributions = [0.5, 0.5, 0];
+    transitionSpeed = 5;
+    updatePopulationDistribution(game.distributions, game.stratArray);
+    
+}
+//main code
+createGame();
+updatePopulationDistribution(game.distributions, game.stratArray);
+animate();
