@@ -16,6 +16,8 @@ class Rect {
         this.color = colorDict[this.strategy];
         this.colorRGB = colorDictRGB[this.strategy];
         this.counter = 0;
+        this.proposal = parseFloat(Math.random().toFixed(2));
+        this.acceptance = parseFloat(Math.random().toFixed(2));
 
         this.calcRGBcolor = function(transitionSpeed) {
             if (this.strategyNew == false) {
@@ -56,7 +58,14 @@ class Rect {
 
         this.draw = function() {
             ctx.beginPath();
-            ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
+            if (document.querySelector('#selectGameMenu').value == 3) {
+                let hue = Math.sqrt(this.proposal);
+                let a = HSVtoRGB(hue % 1, 1, 1);
+                ctx.fillStyle = `rgb(${a[0]}, ${a[1]}, ${a[2]})`;
+            }
+            else {
+                ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
+            }
             //ctx.fillStyle = this.color;
             //ctx.shadowColor = '#1C646D';
             //ctx.shadowBlur = 15;
@@ -74,6 +83,10 @@ class Rect {
 
         this.update = function() {
             //interactivity
+            if (this.height > newHeight && this.width > newWidth) {
+                this.height -= 0.3;
+                this.width -= 0.3;
+            }
             if (drawMode === false) {
                 if (mouse.x - this.x < 50 && mouse.x - this.x > -50 && mouse.y - this.y < 50 && mouse.y - this.y > -50) {
                     if (this.height < height && this.width < width) {
@@ -126,7 +139,7 @@ class Rect {
             
         }
         
-        this.findNeighbours = function() {
+        this.findNeighbours = function(gameBoard) {
             let array = [];
                 
             array.push(
@@ -134,7 +147,7 @@ class Rect {
                 [this.x - width, this.y], 
                 [this.x, this.y + height],
                 [this.x , this.y - height],)
-            rectsArray.forEach(rect => {
+            gameBoard.forEach(rect => {
                 array.forEach(coord => {
                     if (rect.x == coord[0] && rect.y == coord[1]) {
                         this.neighbours.push(rect);
@@ -147,7 +160,7 @@ class Rect {
                 [this.x - width, this.y + height], 
                 [this.x + width, this.y - height],
                 [this.x - width, this.y - height])
-            rectsArray.forEach(rect => {
+            gameBoard.forEach(rect => {
                 array.forEach(coord => {
                     if (rect.x == coord[0] && rect.y == coord[1]) {
                         this.neighbours.push(rect);

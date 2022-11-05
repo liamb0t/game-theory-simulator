@@ -3,11 +3,13 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-const width = 35;
-const height = 35;
-const cellSize = height * width;
-const cols = Math.floor(canvas.width / width);
-const rows = Math.floor(canvas.height / height);
+let width = 25;
+let height = 25;
+let newWidth = 25
+let newHeight = 25
+let cellSize = height * width;
+let cols = Math.floor(canvas.width / width);
+let rows = Math.floor(canvas.height / height);
 
 const mouse = {
     x: undefined,
@@ -17,7 +19,8 @@ const mouse = {
 }
 
 let generations = 0;
-let u = 0.71;
+let u = 0.55;
+let c = 0.5;
 let start = false;
 let wanderX = 5;
 let wanderY = 5;
@@ -28,6 +31,9 @@ let popDensA = 0.5;
 let popDensB = 0.5;
 let popDensC = 0.5;
 let popDensEmpty = 0;
+let mobilityProb;
+let reproProb;
+let selectionProb;
 let updateRule = 0;
 let selfInteractions = false;
 let transitionSpeed = 7;
@@ -43,9 +49,15 @@ let colorDictRGB = {
     'rock': [160, 205, 96],
     'paper': [206, 240, 157],
     'scissors': [56, 24, 76],
-    'A': [160, 205, 96],
-    'B': [56, 24, 76],
-    'C': [31, 8, 2], 
+    'A': [242, 92, 5],
+    'B': [217, 50, 50],
+    'C': [13, 13, 13], 
+    'proposer': [160, 205, 96],
+    'responder': [56, 24, 76],
+    'stag': [160, 205, 96],
+    'hare': [56, 24, 76],
+    'hawk': [160, 205, 96],
+    'dove': [56, 24, 76],
 }
 
 let colorDict = {
@@ -57,9 +69,15 @@ let colorDict = {
     'rock': '#1F0802', 
     'paper': '#CEF09D',
     'scissors': '#38184C',
-    'A': '#A0CD60',
-    'B': '#38184C',
-    'C': '#1F0802',
+    'A': '#F25C05',
+    'B': '#D93232',
+    'C': '#0D0D0D',
+    'proposer': '#A0CD60', 
+    'responder': '#38184C',
+    'stag': '#A0CD60',  
+    'hare': '#38184C',
+    'hawk': '#A0CD60', 
+    'dove': '#38184C',
 }
 
 let stratArray = game.stratArray;
@@ -99,15 +117,17 @@ function animate() {
 }
 
 function createGame() {
+    let array = [];
     for (var y = 0; y < rows; y++) {
         for (var x = 0; x < cols; x++) {
             let newRect = new Rect(x * width, y * height, width, height);
-            rectsArray.push(newRect);
+            array.push(newRect);
         }    
     }
-    rectsArray.forEach(rect => {
-        rect.findNeighbours();
+    array.forEach(rect => {
+        rect.findNeighbours(array);
     });
+    rectsArray = array;
 }
 
 function updatePopulationDistribution(probabilities, strategies) {
@@ -120,6 +140,8 @@ function updatePopulationDistribution(probabilities, strategies) {
         rect.strategyNew = replacingStrat
         rect.color = colorDict[rect.strategy];
         rect.score = 0;
+        rect.proposal = parseFloat(Math.random().toFixed(2));
+        rect.acceptance = parseFloat(Math.random().toFixed(2));
     });
 }
 
@@ -150,14 +172,11 @@ document.querySelector('#draw-button').onclick = function() {
     }
 }
 
-document.querySelector('#neumann-button').onclick = function() {
-    game.neighbourhoodType = 0;
+document.querySelector('#neighbours-menu').onchange = function() {
+    game.neighbourhoodType = parseInt(this.value);
 }
-
-document.querySelector('#moore-button').onclick = function() {
-    game.neighbourhoodType = 1;
-}
-//pop density
+ 
+//pop density + slider stuff
 document.querySelector('#pop-density-slider1').oninput = function() {
    popDensA = parseFloat(this.value);
    popDensB = parseFloat(1 - this.value);
@@ -172,6 +191,34 @@ document.querySelector('#pop-density-slider2').oninput = function() {
     updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
 }
 
+//slider settings for biological stuff
+const slider1 = document.querySelector('#bio-slider1');
+const slider2 = document.querySelector('#bio-slider2');
+const slider3 = document.querySelector('#bio-slider3');
+
+slider1.oninput = function() {
+    slider2.value = 1 - (parseFloat(this.value) + parseFloat(slider3.value));
+    slider3.value = 1 - (parseFloat(this.value) + parseFloat(slider2.value));
+    game.bioSettings = [parseFloat(slider1.value), parseFloat(slider2.value), parseFloat(slider3.value)];
+}
+
+slider2.oninput = function() {
+    slider1.value = 1 - (parseFloat(this.value) + parseFloat(slider3.value));
+    slider3.value = 1 - (parseFloat(this.value) + parseFloat(slider1.value));
+    game.bioSettings = [parseFloat(slider1.value), parseFloat(slider2.value), parseFloat(slider3.value)];
+}
+
+slider3.oninput = function() {
+    slider1.value = 1 - (parseFloat(this.value) + parseFloat(slider2.value));
+    slider2.value = 1 - (parseFloat(this.value) + parseFloat(slider1.value));
+    game.bioSettings = [parseFloat(slider1.value), parseFloat(slider2.value), parseFloat(slider3.value)];
+}
+
+//segregation settings
+document.querySelector('#seg-threshold').oninput = function() {
+    game.threshold = parseFloat(this.value);
+}
+
 //mousewheel scroll functions
 window.addEventListener('wheel', function(event){
     if (drawMode === true) {
@@ -183,13 +230,29 @@ window.addEventListener('wheel', function(event){
         }
         document.querySelector('#draw-mode-icon').src = `img/draw-mode-icon-${mouse.scrollCounter}.png`;
     }
-})
-    
-document.querySelectorAll('.updateRulesBtns').forEach(function(button) {
-    button.onclick = function() {
-        updateRule = parseInt(button.value);
+    else {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (event.deltaY < 0 && (cols * rows) < 100000) {
+            //scrolling up, increases cells
+            if (height && width > 0) {
+                newHeight -= 1;
+                newWidth -= 1;
+            }
+        }
+        if (event.deltaY > 0) {
+            //scrolling down, decreases cells
+            newHeight += 1;
+            newWidth += 1;
+        }
+        cols = Math.floor(canvas.width/width);
+        rows = Math.floor(canvas.height/height);
+        
     }
 })
+    
+document.querySelector('#update-rules-menu').onchange = function() {
+    updateRule = parseInt(this.value);
+}
 
 document.querySelector('#selfInteractionsBtn').onclick = function() {
     if (selfInteractions === false) {
@@ -200,41 +263,51 @@ document.querySelector('#selfInteractionsBtn').onclick = function() {
     }
 }
 
-document.querySelector('#maxRangeCounter').onclick = function() {
-    if (this.value > minRange) {
-        maxRange = parseFloat(this.value);
-    }
-}
 //reset the games game board
 document.querySelector('#reset-button').onclick = function() {
     start = false;
-    updatePopulationDistribution(game.distributions, game.stratArray)
-}
-
-document.querySelector('#minRangeCounter').onclick = function() {
-    if (this.value < maxRange) {
-        minRange = parseFloat(this.value);
-    }
+    updatePopulationDistribution(game.distributions, game.stratArray);
 }
 
 document.querySelector('#selectGameMenu').onchange = function() {
+    let p;
     if (this.value == 0) {
         transitionSpeed = 15;
         game = new PrisonersDilemma();
-        stratArray = game.stratArray;
-        updatePopulationDistribution(game.distributions, game.stratArray);
+        p = document.querySelector('#game-info-pd')
     }
     if (this.value == 1) {
         transitionSpeed = 30;
         game = new RPS();
-        stratArray = game.stratArray;
-        updatePopulationDistribution(game.distributions, game.stratArray);
+        p = document.querySelector('#game-info-rps')
     }
     if (this.value == 2) {
         transitionSpeed = 10;
         game = new SegregationModel();
-        stratArray = game.stratArray;
-        updatePopulationDistribution(game.distributions, game.stratArray);
+        p = document.querySelector('#game-info-schelling')
+    }
+    if (this.value == 3) {
+        transitionSpeed = 10;
+        game = new Ultimatum();
+        p = document.querySelector('#game-info-ulti')
+    }
+    //stag-hunt
+    if (this.value == 4) {
+        transitionSpeed = 10;
+        game = new StagHunt();
+        p = document.querySelector('#game-info-stag')
+    }
+    //hawk-dove
+    if (this.value == 5) {
+        transitionSpeed = 10;
+        game = new HawkDove();
+        p = document.querySelector('#game-info-hd')
     }
     start = false;
+    stratArray = game.stratArray;
+    updatePopulationDistribution(game.distributions, game.stratArray);
+    document.querySelectorAll('.game-info').forEach(p => {
+        p.style.display = 'none';
+    });
+    p.style.display = 'block';
 }

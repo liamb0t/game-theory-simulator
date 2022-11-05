@@ -9,7 +9,7 @@ class RPS {
             'empty',
         ]
         this.distributions = [0.1, 0.4, 0.4];
-
+        this.bioSettings = [0.1, 0.5, 0.4];
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
             if (this.neighbourhoodType === 0) {
@@ -77,7 +77,7 @@ class RPS {
         }
 
         this.updateBiological = function(rect) {
-            let probabilityArray = [0.1, 0.5, 0.4];
+            let probabilityArray = this.bioSettings;
             const distribution = createDistribution([0, 1, 2], 
                 probabilityArray, 
                 10);

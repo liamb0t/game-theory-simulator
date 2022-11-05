@@ -8,6 +8,13 @@ class PrisonersDilemma {
             'empty'
         ]
         this.distributions = [0.1, 0.4];
+        this.bioSettings = [0.1, 0.5, 0.4];
+        this.payoffs = {
+            'mutualCoop': 1,
+            'defectorsPayoff': 1,
+            'mutualDefect': -1,
+            'suckersPayoff': -1,
+        }
 
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
@@ -29,13 +36,15 @@ class PrisonersDilemma {
             }
             
             neighbours.forEach(neighbour => {
+                //mutual cooperation
                 if ((neighbour.strategy == 'Cu' || neighbour.strategy == 'wasDu') 
                 && (rect.strategy == 'Cu' || rect.strategy == 'wasDu')) {
-                    score += 1;
+                    score += this.payoffs['mutualCoop'];
                 }
+                //suckers payoff cooperation
                 if ((neighbour.strategy == 'Cu' || neighbour.strategy == 'wasDu') 
                 && (rect.strategy == 'Du' || rect.strategy == 'wasCu')) {
-                    score += 1 + u;
+                    score += this.payoffs['defectorsPayoff'] + u;
                 }
             });
             rect.score = score;
@@ -73,7 +82,7 @@ class PrisonersDilemma {
         }
 
         this.updateBiological = function(rect) {
-            let probabilityArray = [0.1, 0.5, 0.4];
+            let probabilityArray = this.bioSettings;
             const distribution = createDistribution([0, 1, 2], 
                 probabilityArray, 
                 10);

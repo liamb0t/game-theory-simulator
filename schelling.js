@@ -8,7 +8,8 @@ class SegregationModel {
             'C',
             'empty'
         ]
-        this.distributions = [0.3, 0.3, 0.3, 0.1];
+        this.distributions = [0.3, 0.3, 0.35, 0.05];
+        this.threshold = 0.5;
 
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
@@ -32,17 +33,28 @@ class SegregationModel {
         }
 
         this.updateStrategies = function(rect, updateRule) {
-            const neighbours = this.sliceNeighbours(rect);
-            if (rect.counter < neighbours.length/2) {
+            const player = rectsArray[Math.floor(Math.random() * rectsArray.length)]
+            const neighbours = this.sliceNeighbours(player);
+            if (player.counter/neighbours.length < this.threshold) {
                 let newSpot = rectsArray[Math.floor(Math.random() * rectsArray.length)];
-                if (newSpot.strategy === 'empty') {
-                    newSpot.strategyNew = rect.strategy;
-                    rect.strategyNew = 'empty';
+                while (newSpot.strategy !== 'empty') {
+                    newSpot = rectsArray[Math.floor(Math.random() * rectsArray.length)];
                 }
-                else {
-                    rect.strategyNew = rect.strategy;
-                }
+                newSpot.strategy = player.strategy;
+                newSpot.strategyNew = player.strategy;
+                player.strategy = 'empty';
+                player.strategyNew = 'empty';
             }
+        }
+
+        this.findEmptySpots = function(arr) {
+            let emptySpots = [];
+            rectsArray.forEach(rect => {
+                if (rect.strategy === 'empty') {
+                    emptySpots.push(rect);
+                }
+            });
+            return emptySpots;
         }
     }
 }

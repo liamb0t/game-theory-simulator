@@ -1,23 +1,127 @@
+@font-face {
+    font-family: myFirstFont;
+    src: url(img/FuturaHandwritten.ttf);
+  } 
+  
+  div {
+    font-family: myFirstFont;
+  }
+
+
+/***************
+THE GRID
+***************/
+
 #canvas {
     background-color: #1C646D;
     cursor: crosshair;
 }
 
-#container {
-    font-size: 10px;
-    font-family: 'Roboto', sans-serif;
-    color: rgb(163, 163, 163);
-    animation: fadein 1s;
-    position: absolute;
+/***************
+THE EDITOR
+***************/
+select {
+    color: #d3d3d3;
+    background-color: #1f0802;
+    border: 1px solid var(--select-border);
+    border-radius: 0.25em;
+    padding: 0.25em 0.5em;
+    font-family: myFirstFont;
+    font-size: 1.25rem;
+    cursor: pointer;
+    line-height: 1.1;
+  }
+
+#editor-container{
+    color: white;
+    font-family: myFirstFont;
+	min-width: 340px;
+	width: 20%;
+	height: 100%;
+
+	position: absolute;
+	right: 0;
+
+	background: #1f0802;
+}
+
+#editor-title{
+	font-size: 27px;
+	margin-bottom: 25px;
+}
+
+#game-info-rps {
+    display: none;
+}
+
+#game-info-pd {
     display: block;
-    width: auto;
-    height: auto;
-    background-color: #181818;
-    border: solid 1px rgb(121, 121, 121);
+}
+
+#game-info-schelling {
+    display: none;
+}
+
+#game-info-ulti {
+    display: none;
+}
+
+#game-info-hd {
+    display: none;
+}
+
+#game-info-stag {
+    display: none;
+}
+
+.sliders {
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 60%; /* Full-width */
+    height: 15px; /* Specified height */
+    background: #d3d3d3; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+  }
+
+.sliders:hover {
+opacity: 1; /* Fully shown on mouse-over */
+}
+
+.sliders::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    background: #1C646D; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+  }
+
+
+/***************
+THE PLAY CONTROLS
+***************/
+
+#play-container{
+	padding: 10px 0;
+    width: 80%;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: rgba(202, 17, 17, 0);
+}
+
+#play-controls{
+	width: 445px;
+	height: 40px;
+	margin: 0 auto;
+	overflow: hidden;
 }
 
 #draw-mode-container img {
     width: 25;
     height: 25;
 }
-
