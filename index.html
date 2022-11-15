@@ -2,6 +2,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
+        <title>EGT Simulator</title>
     </head>
     <body>
         <div id="front-title">
@@ -15,6 +16,9 @@
                 <div id="editor-title">
                     <span>THE GAME</span>
                 </div>
+                <p id="game-info-start" class="game-info">Select a game from the game menu!
+                </p>
+
                 <p id="game-info-pd" class="game-info">The prisoner's dilemma is a paradox in decision analysis in which two individuals acting in their own self-interests do not produce the optimal outcome.
                     When space is introduced into the game and players are surrounded by neighbours, we see much more fairer outcomes!
                 </p>
@@ -52,57 +56,93 @@
                 <div id="editor-title">
                     <span>THE RULES</span>
                 </div>
-                <span>At the end of each generation, things update their strategies</span>
-                <select id="update-rules-menu">
-                    <option value="0">deterministically</option>
-                    <option value="1">probalistically</option>
-                    <option value="2">biologically</option>
-                </select>
-                <br>
-                <label for="payoff">Payoff</label>
-                    <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff" class="sliders">
-                <p>These parameters determine the probalility by which biolgical process a thing changes it's strategy.</p>
-                <div class="proportions"> 
-                    <span>Reproduction</span>
-                    <input type="range" min = "0" max = "1" step="0.01" id="bio-slider1" name="bio-slider1" class="sliders">
 
-                    <span>Selection</span>
-                    <input type="range" min = "0" max = "1" step="0.01" id="bio-slider2" name="bio-slider2" class="sliders">
+                <div id="editor-rules">
+                    <div>
+                        <span>At the end of each generation, things update their strategies</span>
+                        <select id="update-rules-menu">
+                        <option value="0">deterministically</option>
+                        <option value="1">probalistically</option>
+                        <option value="2">biologically</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="payoff">Payoff</label>
+                        <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff" class="sliders" value="0.75">
+                    </div>
+                    <br>
+                
+                    <div class="proportions" id="bio-proportions"> 
+                        <p>These parameters determine the probalility by which biolgical process a thing changes it's strategy:</p>
+                        <span>Reproduction</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="bio-slider1" name="bio-slider1" class="sliders">
 
-                    <span>Exchange</span>
-                    <input type="range" min = "0" max = "1" step="0.01" id="bio-slider3" name="bio-slider3" class="sliders">
+                        <span>Selection</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="bio-slider2" name="bio-slider2" class="sliders">
+
+                        <span>Exchange</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="bio-slider3" name="bio-slider3" class="sliders">
+                    </div>
+                    <div>
+                        <label for="selfInteractionsBtn">Things interact with themselves</label>
+                        <input type="checkbox" id="selfInteractionsBtn">
+                    </div>
                 </div>
-
-                <label for="selfInteractionsBtn">Things interact with themselves.</label>
-                    <input type="checkbox" id="selfInteractionsBtn">
-                    <br>
-                    <label id="slider-6-label" for="seg-threshold" >If the number of my neighbours who are the same as me are greater than, I will move to an empty cell. </label>
-                    <input type="range" min = "0" max = "1" step="0.01" id="seg-threshold" name="seg-threshold" class="sliders">
-                    <p ><span id="slider-6-value"></span></p>
-                    <br>
+                <div id="segregation-rules">
+                    <span>If the number of my neighbours who are the same as me are greater than</span>
+                    <input type="text" id="seg-threshold" name="seg-threshold" class="editor_number" placeholder="50">
+                    <span>%, I will move to an empty square. </span>
+                </div>
                 <hr>
+                    
+
                 <div id="editor-title">
                     <span>THE WORLD</span>
                 </div>
                 <div>
-                    <span>
+                    <p>
                         The world starts with this ratio of things:
-                        <br>
-                    </span>
-                    <div>
-                        <label id="slider-1-label" for="slider-1" >Cooperators</label>
+                    </p>
+                    <div class="proportions" id="bi-input-games-div">
+                        <span id="popsimple-span1">Cooperators</span>
                         <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider1" name="pop-density-slider1" class="sliders">
-                        <p><span id="slider-1-value"></span></p>
                         
-                        <label id="slider-2-label" for="slider-2">Defectors</label>
-                        <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider2" name="pop-density-slider2" class="sliders"> 
-                        <p><span id="slider-2-value"></span></p>
+                        <span id="popsimple-span2">Defectors</span>
+                        <input  type="range" min = "0" max = "1" step="0.01" id="pop-density-slider2" name="pop-density-slider2" class="sliders">
+                       
+
+                        <span id="popsimple-span3">Empty Cells</span>
+                        
+                        <input  type="range" min = "0" max = "1" step="0.01" id="pop-density-slider3" name="pop-density-slider3" class="sliders">  
+                    </div>
+
+                    <div class="proportions" id="tri-input-games-div"> 
+                        <span id="pop-span1">Rock</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="tri-slider1" name="tri-slider1" class="sliders">
+                        <input type="color" id="color1" class="colorpicker" data-strat="rock">
+    
+                        <span id="pop-span2">Paper</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="tri-slider2" name="tri-slider2" class="sliders">
+                        <input type="color" id="color2" class="colorpicker" data-strat="paper">
+    
+                        <span id="pop-span3">Scissors</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="tri-slider3" name="tri-slider3" class="sliders">
+                        <input type="color" id="color3" class="colorpicker" data-strat="scissors">
+
+                        <span id="pop-span4">Empty Cells</span>
+                        <input type="range" min = "0" max = "1" step="0.01" id="tri-slider4" name="tri-slider4" class="sliders">
+                        <input type="color" id="color4" class="colorpicker" data-strat="empty">
                     </div>
                     <span>Each thing considers it's neighbours to be</span>
                     <select id="neighbours-menu">
                         <option value="0">the 4 cells to it's sides</option>
                         <option value="1">the 8 cells to it's sides and corners</option>
                     </select>
+                    <div>
+                        <span>Change the size of a cell:</span>
+                        <input type="range" id="cellsize-slider" min="0" max="1000" step="1" class="sliders">
+                    </div>
                 </div>
                 <hr>
             </div>
@@ -113,6 +153,7 @@
                 <button id="reset-button">Reset</button>
                 <button id="play-button">Start</button>
                 <select id="selectGameMenu">
+                    <option value="100">Select a game</option>
                     <option value="0">Prisoners Dilemma</option>
                     <option value="1">Rock Paper Scissors</option>
                     <option value="2">Segregation</option>

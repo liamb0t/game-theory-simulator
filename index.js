@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 25;
-let height = 25;
+let width = 20;
+let height = 20;
 let newWidth = 25
 let newHeight = 25
 let cellSize = height * width;
@@ -19,7 +19,7 @@ const mouse = {
 }
 
 let generations = 0;
-let u = 0.55;
+let u = 0.75;
 let c = 0.5;
 let start = false;
 let wanderX = 5;
@@ -29,7 +29,7 @@ let drawMode = false;
 let z = 1;
 let popDensA = 0.5;
 let popDensB = 0.5;
-let popDensC = 0.5;
+let popDensC = 0;
 let popDensEmpty = 0;
 let mobilityProb;
 let reproProb;
@@ -39,6 +39,7 @@ let selfInteractions = false;
 let transitionSpeed = 7;
 let minRange = 0.25;
 let maxRange = 0.75;
+let neighbourhoodType = 0;
 
 let colorDictRGB = {
     'Cu': [160, 205, 96], 
@@ -46,9 +47,9 @@ let colorDictRGB = {
     'wasCu': [31, 8, 2], 
     'wasDu': [206, 240, 157],
     'empty': [28, 100, 109],
-    'rock': [160, 205, 96],
-    'paper': [206, 240, 157],
-    'scissors': [56, 24, 76],
+    'rock': [242, 5, 116],
+    'paper': [4, 217, 217],
+    'scissors': [171, 217, 4],
     'A': [242, 92, 5],
     'B': [217, 50, 50],
     'C': [13, 13, 13], 
@@ -66,9 +67,9 @@ let colorDict = {
     'wasCu': '#1F0802', 
     'wasDu': '#CEF09D',
     'empty': '#1C646D', 
-    'rock': '#1F0802', 
-    'paper': '#CEF09D',
-    'scissors': '#38184C',
+    'rock': '#F20574', 
+    'paper': '#04D9D9',
+    'scissors': '#ABD904',
     'A': '#F25C05',
     'B': '#D93232',
     'C': '#0D0D0D',
@@ -170,21 +171,31 @@ document.querySelector('#draw-button').onclick = function() {
 }
 
 document.querySelector('#neighbours-menu').onchange = function() {
-    game.neighbourhoodType = parseInt(this.value);
+    neighbourhoodType = parseInt(this.value);
 }
  
 //pop density + slider stuff
 document.querySelector('#pop-density-slider1').oninput = function() {
    popDensA = parseFloat(this.value);
-   popDensB = parseFloat(1 - this.value);
+   popDensB = parseFloat(1 - this.value - popDensEmpty);
    document.querySelector('#pop-density-slider2').value = popDensB;
    updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
 }
 
 document.querySelector('#pop-density-slider2').oninput = function() {
     popDensB = parseFloat(this.value);
-    popDensA = parseFloat(1 - this.value);
+    popDensA = parseFloat(1 - this.value - popDensEmpty);
     document.querySelector('#pop-density-slider1').value = popDensA;
+    updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
+}
+
+document.querySelector('#pop-density-slider3').oninput = function() {
+    let delta = parseFloat(popDensEmpty - this.value);
+    popDensEmpty = parseFloat(this.value);
+    popDensA += delta/2;
+    popDensB += delta/2;
+    document.querySelector('#pop-density-slider1').value = popDensA;
+    document.querySelector('#pop-density-slider2').value = popDensB;
     updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
 }
 
@@ -211,6 +222,63 @@ slider3.oninput = function() {
     game.bioSettings = [parseFloat(slider1.value), parseFloat(slider2.value), parseFloat(slider3.value)];
 }
 
+//slider settings for tri input games
+const slider4 = document.querySelector('#tri-slider1');
+const slider5 = document.querySelector('#tri-slider2');
+const slider6 = document.querySelector('#tri-slider3');
+const slider7 = document.querySelector('#tri-slider4');
+
+slider4.oninput = function() {
+    slider5.value = parseFloat(1 - this.value - slider6.value - popDensEmpty);
+    slider6.value = parseFloat(1 - this.value - slider5.value - popDensEmpty);
+    popDensA = parseFloat(slider4.value);
+    popDensB = parseFloat(slider5.value);
+    popDensC = parseFloat(slider6.value);
+    updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
+}
+
+slider5.oninput = function() {
+    slider4.value = parseFloat(1 - this.value - slider6.value - popDensEmpty);
+    slider6.value = parseFloat(1 - this.value - slider4.value - popDensEmpty);
+    popDensA = parseFloat(slider4.value);
+    popDensB = parseFloat(slider5.value);
+    popDensC = parseFloat(slider6.value);
+    updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
+}
+
+slider6.oninput = function() {
+    slider4.value = parseFloat(1 - this.value - slider5.value - popDensEmpty);
+    slider5.value = parseFloat(1 - this.value - slider4.value - popDensEmpty);
+    popDensA = parseFloat(slider4.value);
+    popDensB = parseFloat(slider5.value);
+    popDensC = parseFloat(slider6.value);
+    updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
+}
+//controls empty cells for three strat games
+slider7.oninput = function() {
+    let delta = parseFloat(popDensEmpty - this.value);
+    popDensEmpty = parseFloat(this.value);
+    popDensA += delta/3;
+    popDensB += delta/3;
+    popDensC += delta/3;
+    slider4.value = popDensA;
+    slider5.value = popDensB;
+    slider6.value = popDensC;
+    updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
+}
+
+document.querySelector('#cellsize-slider').oninput = function() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if ((cols * rows) < 100000) {
+        if (height && width > 0) {
+            newHeight -= 1;
+            newWidth -= 1;
+        }
+    }
+    cols = Math.floor(canvas.width/width);
+    rows = Math.floor(canvas.height/height);
+}
+
 //segregation settings
 document.querySelector('#seg-threshold').oninput = function() {
     game.threshold = parseFloat(this.value);
@@ -227,28 +295,16 @@ window.addEventListener('wheel', function(event){
         }
         document.querySelector('#draw-mode-icon').src = `img/draw-mode-icon-${mouse.scrollCounter}.png`;
     }
-    else {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        if (event.deltaY < 0 && (cols * rows) < 100000) {
-            //scrolling up, increases cells
-            if (height && width > 0) {
-                newHeight -= 1;
-                newWidth -= 1;
-            }
-        }
-        if (event.deltaY > 0) {
-            //scrolling down, decreases cells
-            newHeight += 1;
-            newWidth += 1;
-        }
-        cols = Math.floor(canvas.width/width);
-        rows = Math.floor(canvas.height/height);
-        
-    }
 })
     
 document.querySelector('#update-rules-menu').onchange = function() {
     updateRule = parseInt(this.value);
+    if (updateRule === 2) {
+        document.querySelector('#bio-proportions').style.display = 'block';
+    }
+    else {
+        document.querySelector('#bio-proportions').style.display = 'none';
+    }
 }
 
 document.querySelector('#selfInteractionsBtn').onclick = function() {
@@ -263,42 +319,80 @@ document.querySelector('#selfInteractionsBtn').onclick = function() {
 //reset the games game board
 document.querySelector('#reset-button').onclick = function() {
     start = false;
-    updatePopulationDistribution(game.distributions, game.stratArray);
+    z = 1;
+    if (game.stratArray.length === 3) {
+        updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
+    }
+    else {
+        updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
+    }
 }
 //game select menu
 document.querySelector('#selectGameMenu').onchange = function() {
     let p;
+    if (this.value != 100) {
+        const selectMenu = document.querySelector('#selectGameMenu');
+        selectMenu[0].style.display = 'none';
+    }
     if (this.value == 0) {
         transitionSpeed = 15;
         game = new PrisonersDilemma();
-        p = document.querySelector('#game-info-pd')
+        p = document.querySelector('#game-info-pd');
+        document.querySelector('#editor-rules').style.display = 'block';
+        document.querySelector('#segregation-rules').style.display = 'none';
+        document.querySelector('#bi-input-games-div').style.display = 'block';
+        document.querySelector('#tri-input-games-div').style.display = 'none';
+        document.querySelector('#popsimple-span1').innerHTML = 'Cooperator';
+        document.querySelector('#popsimple-span2').innerHTML = 'Defector';
     }
     if (this.value == 1) {
-        transitionSpeed = 30;
+        transitionSpeed = 10;
         game = new RPS();
-        p = document.querySelector('#game-info-rps')
+        p = document.querySelector('#game-info-rps');
+        document.querySelector('#editor-rules').style.display = 'block';
+        document.querySelector('#segregation-rules').style.display = 'none';
+        document.querySelector('#bi-input-games-div').style.display = 'none';
+        document.querySelector('#tri-input-games-div').style.display = 'block';
+        document.querySelector('#pop-span1').innerHTML = 'Rock';
+        document.querySelector('#pop-span2').innerHTML = 'Paper';
+        document.querySelector('#pop-span3').innerHTML = 'Scissors';
     }
     if (this.value == 2) {
         transitionSpeed = 10;
         game = new SegregationModel();
-        p = document.querySelector('#game-info-schelling')
+        p = document.querySelector('#game-info-schelling');
+        document.querySelector('#editor-rules').style.display = 'none';
+        document.querySelector('#segregation-rules').style.display = 'block';
+        document.querySelector('#bi-input-games-div').style.display = 'none';
+        document.querySelector('#tri-input-games-div').style.display = 'block';
+        document.querySelector('#pop-span1').innerHTML = 'Orange';
+        document.querySelector('#pop-span2').innerHTML = 'Red';
+        document.querySelector('#pop-span3').innerHTML = 'Black';
     }
     if (this.value == 3) {
         transitionSpeed = 10;
         game = new Ultimatum();
-        p = document.querySelector('#game-info-ulti')
+        p = document.querySelector('#game-info-ulti');
     }
     //stag-hunt
     if (this.value == 4) {
         transitionSpeed = 10;
         game = new StagHunt();
-        p = document.querySelector('#game-info-stag')
+        p = document.querySelector('#game-info-stag');
+        document.querySelector('#bi-input-games-div').style.display = 'block';
+        document.querySelector('#tri-input-games-div').style.display = 'none';
+        document.querySelector('#popsimple-span1').innerHTML = 'Hunt stag';
+        document.querySelector('#popsimple-span2').innerHTML = 'Hunt hare';
     }
     //hawk-dove
     if (this.value == 5) {
         transitionSpeed = 10;
         game = new HawkDove();
-        p = document.querySelector('#game-info-hd')
+        p = document.querySelector('#game-info-hd');
+        document.querySelector('#bi-input-games-div').style.display = 'block';
+        document.querySelector('#tri-input-games-div').style.display = 'none';
+        document.querySelector('#popsimple-span1').innerHTML = 'Hawk';
+        document.querySelector('#popsimple-span2').innerHTML = 'Dove';
     }
     start = false;
     stratArray = game.stratArray;
@@ -307,18 +401,32 @@ document.querySelector('#selectGameMenu').onchange = function() {
         p.style.display = 'none';
     });
     p.style.display = 'block';
+    colors();
+}
+//change colors of a thing
+function colors() {
+    let i = 0;
+    document.querySelectorAll('.colorpicker').forEach(color => {
+        color.dataset.strat = game.stratArray[i];
+        color.value = colorDict[color.dataset.strat];
+        color.onchange = function() {
+            const newColor = hexToRGB(color.value);
+            colorDictRGB[color.dataset.strat] = newColor;
+        }
+        i += 1;
+    });
 }
 
 document.querySelector('#open-page').onclick = function() {
     document.querySelector('#front-title').style.display = 'none';
     document.querySelector('#editor-container').style.display = 'block';
     document.querySelector('#play-container').style.display = 'block';
-    game.distributions = [0.5, 0.5, 0];
     transitionSpeed = 5;
     updatePopulationDistribution(game.distributions, game.stratArray);
     
 }
 //main code
+game.distributions = [0, 0, 1];
 createGame();
 updatePopulationDistribution(game.distributions, game.stratArray);
 animate();

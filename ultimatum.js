@@ -1,7 +1,6 @@
 class Ultimatum {
 
     constructor() {
-        this.neighbourhoodType = 0;
         this.stratArray = [
             'proposer',
             'responder',
@@ -11,10 +10,10 @@ class Ultimatum {
         this.bioSettings = [0.1, 0.5, 0.4];
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
-            if (this.neighbourhoodType === 0) {
+            if (neighbourhoodType === 0) {
                 neighbours = rect.neighbours.slice(0, 4);
             }
-            else if (this.neighbourhoodType === 1) {
+            else if (neighbourhoodType === 1) {
                 neighbours = rect.neighbours;
             }
             return neighbours;

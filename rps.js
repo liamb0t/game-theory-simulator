@@ -1,7 +1,6 @@
 class RPS {
     constructor() {
         //0 = NEUMANN NEIGHBOURHOOD, 1 = MOORE NEIGHBOURHOOD, 2 = ?
-        this.neighbourhoodType = 0;
         this.stratArray = [
             'rock',
             'paper',
@@ -12,10 +11,10 @@ class RPS {
         this.bioSettings = [0.1, 0.5, 0.4];
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
-            if (this.neighbourhoodType === 0) {
+            if (neighbourhoodType === 0) {
                 neighbours = rect.neighbours.slice(0, 4);
             }
-            else if (this.neighbourhoodType === 1) {
+            else if (neighbourhoodType === 1) {
                 neighbours = rect.neighbours;
             }
             return neighbours;

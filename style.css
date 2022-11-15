@@ -33,7 +33,6 @@ select {
     background-color: #1f0802;
     padding: 0.25em 0.5em;
     font-family: myFirstFont;
-    font-size: 1.25rem;
     cursor: pointer;
     line-height: 1.1;
 }
@@ -55,24 +54,10 @@ select {
 	margin: 40px 40px 40px 20px;
 }
 
-
-
-#editor div.proportions{
-	overflow: hidden;
-}
-#editor div.proportions > div{
-	overflow: hidden;
-}
-#editor div.proportions > div > span{
-	width:1em;
-	height: 1em;
-	display: inline-block;
-	border-right: 1px solid #aaa;
-	padding-right: 5px;
-	margin-right: 5px;
-}
-#editor div.proportions > div > input[type=range]{
-	width: 230px;
+#editor .proportions span{
+    padding-bottom: 10px;
+    display: inline-block;
+    width: 100px;
 }
 
 #editor hr{
@@ -88,12 +73,27 @@ select {
 	margin-bottom: 25px;
 }
 
+#editor input[type=text].editor_number{
+	font-size: 16px;
+    width: 40px;
+    cursor: col-resize;
+    background-color: #1f0802;
+    border:none;
+    border-bottom: 2px dotted #1f0802;
+    border-radius: 0;
+
+}
+
+#game-info-start {
+    display: block;
+}
+
 #game-info-rps {
     display: none;
 }
 
 #game-info-pd {
-    display: block;
+    display: none;
 }
 
 #game-info-schelling {
@@ -109,6 +109,10 @@ select {
 }
 
 #game-info-stag {
+    display: none;
+}
+
+#bio-proportions {
     display: none;
 }
 
@@ -137,7 +141,22 @@ opacity: 1; /* Fully shown on mouse-over */
     cursor: pointer; /* Cursor on hover */
   }
 
+#bi-input-games-div {
+    display: block;
+}
 
+#tri-input-games-div {
+    display: none;
+}
+
+.colorpicker{
+    cursor: pointer;
+    border-radius: 50%;
+    background-color: #1f0802;
+    height: 25px;
+    width: 25px;
+    
+}
 /***************
 THE PLAY CONTROLS
 ***************/

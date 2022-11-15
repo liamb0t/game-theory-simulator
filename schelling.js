@@ -1,7 +1,6 @@
 class SegregationModel {
     constructor() {
         //0 = NEUMANN NEIGHBOURHOOD, 1 = MOORE NEIGHBOURHOOD, 2 = ?
-        this.neighbourhoodType = 0;
         this.stratArray = [
             'A',
             'B',
@@ -10,13 +9,13 @@ class SegregationModel {
         ]
         this.distributions = [0.3, 0.3, 0.35, 0.05];
         this.threshold = 0.5;
-
+        
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
-            if (this.neighbourhoodType === 0) {
+            if (neighbourhoodType === 0) {
                 neighbours = rect.neighbours.slice(0, 4);
             }
-            else if (this.neighbourhoodType === 1) {
+            else if (neighbourhoodType === 1) {
                 neighbours = rect.neighbours;
             }
             return neighbours;
