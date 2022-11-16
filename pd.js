@@ -25,6 +25,7 @@ class PrisonersDilemma {
             }
             return neighbours;
         }
+        
         this.playGame = function(rect) {
             let neighbours = this.sliceNeighbours(rect);
             let score = 0;
@@ -33,7 +34,6 @@ class PrisonersDilemma {
                     score += 1;
                 }
             }
-            
             neighbours.forEach(neighbour => {
                 //mutual cooperation
                 if ((neighbour.strategy == 'Cu' || neighbour.strategy == 'wasDu') 

@@ -67,12 +67,17 @@
                         </select>
                     </div>
                     <br>
-                    <div>
-                        <label for="payoff">Payoff</label>
+                    <div class="proportions" id="utility-functions">
+                        <span>Payoff from resource</span>
                         <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff" class="sliders" value="0.75">
+                        <span>Cost of resource</span>
+                        <input type="range" min="0.0" max="3" step="0.01" id="cost" name="cost" class="sliders" value="0.75">
                     </div>
                     <br>
-                
+                    <div class="proportions">
+                        <span>Noise</span>
+                        <input type="range" id="noise" min="0.0" max="1" step="0.001" class="sliders" value="0.005">
+                    </div>
                     <div class="proportions" id="bio-proportions"> 
                         <p>These parameters determine the probalility by which biolgical process a thing changes it's strategy:</p>
                         <span>Reproduction</span>
@@ -91,18 +96,24 @@
                 </div>
                 <div id="segregation-rules">
                     <span>If the number of my neighbours who are the same as me are greater than</span>
-                    <input type="text" id="seg-threshold" name="seg-threshold" class="editor_number" placeholder="50">
+                    <input type="text" id="seg-threshold" name="seg-threshold" class="editor_number" value="50">
                     <span>%, I will move to an empty square. </span>
                 </div>
                 <hr>
                     
-
                 <div id="editor-title">
                     <span>THE WORLD</span>
                 </div>
                 <div>
+                    <div>
+                        <span>This world is a </span>
+                        <input type="text" id="cols-input" class="editor_number" placeholder="128">
+                        <span>by</span>
+                        <input type="text" id="rows-input" class="editor_number" placeholder="64">
+                        <span>grid.</span>
+                    </div>
                     <p>
-                        The world starts with this ratio of things:
+                        It starts with this ratio of things:
                     </p>
                     <div class="proportions" id="bi-input-games-div">
                         <span id="popsimple-span1">Cooperators</span>
@@ -140,11 +151,21 @@
                         <option value="1">the 8 cells to it's sides and corners</option>
                     </select>
                     <div>
-                        <span>Change the size of a cell:</span>
+                        <span>Adjust the size of a cell:</span>
                         <input type="range" id="cellsize-slider" min="0" max="1000" step="1" class="sliders">
                     </div>
+                   
                 </div>
                 <hr>
+                <div>
+                    <span>Cooperators:</span>
+                    <span id="coop-counter">0</span>
+                    <span>%</span>
+                    <br>
+                    <span>Defectors:</span>
+                    <span id="defect-counter">0</span>
+                    <span>%</span>
+                </div>
             </div>
         </div>
 
@@ -166,7 +187,6 @@
                 <div>
                     <img id="draw-mode-icon" src="img/draw-mode-icon-2.png" width="25" height="25">
                 </div>
-                <h1 id="gen-counter">0</h1>
             </div>
         </div>
 

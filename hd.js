@@ -1,7 +1,6 @@
 class HawkDove {
     constructor() {
         //0 = NEUMANN NEIGHBOURHOOD, 1 = MOORE NEIGHBOURHOOD, 2 = ?
-        this.neighbourhoodType = 0;
         this.stratArray = [
             'hawk',
             'dove',
@@ -18,10 +17,10 @@ class HawkDove {
 
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;
-            if (this.neighbourhoodType === 0) {
+            if (neighbourhoodType === 0) {
                 neighbours = rect.neighbours.slice(0, 4);
             }
-            else if (this.neighbourhoodType === 1) {
+            else if (neighbourhoodType === 1) {
                 neighbours = rect.neighbours;
             }
             return neighbours;
@@ -30,25 +29,25 @@ class HawkDove {
             let neighbours = this.sliceNeighbours(rect);
             let score = 0;
             if (selfInteractions) {
-                if (rect.strategy == 'Cu' || rect.strategy  == 'wasDu') {
-                    score += 1;
+                if (rect.strategy == 'hawk' ) {
+                    score += (u - c)/2;
+                }
+                if (rect.strategy == 'dove' ) {
+                    score += u/2;
                 }
             }
             
             neighbours.forEach(neighbour => {
                 //mutual cooperation
                 if (neighbour.strategy == 'hawk' && rect.strategy == 'hawk') {
-                    score += 1 - c
+                    score += (u - c)/2;
                 }
                 //suckers payoff cooperation
                 if (neighbour.strategy == 'dove' && rect.strategy == 'dove') {
-                    score += 1
-                }
-                if (neighbour.strategy == 'hawk' && rect.strategy == 'dove') {
-                    score += 0
+                    score += u/2;
                 }
                 if (neighbour.strategy == 'dove' && rect.strategy == 'hawk') {
-                    score += 2
+                    score += u;
                 }
             });
             rect.score = score;
@@ -71,7 +70,7 @@ class HawkDove {
         this.updateDeterministic = function(rect) {
             if (generations % 1 === 0) {
                 let bestStrat = undefined;
-                let highScore = 0;
+                let highScore = -999;
                 const neighbours = this.sliceNeighbours(rect); 
                 neighbours.forEach(neighbour => {
                     if (neighbour.score > highScore) {

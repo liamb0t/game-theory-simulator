@@ -22,6 +22,11 @@ class Ultimatum {
         this.playGame = function(rect) {
             let score = 0;
             const player = rectsArray[Math.floor(Math.random() * rectsArray.length)];
+            if (selfInteractions) {
+                if (player.proposal >= player.acceptance) {
+                    score += 1 - player.proposal;
+                }
+            }
             player.neighbours.forEach(neighbour => {
                 if (player.proposal >= neighbour.acceptance) {
                     neighbour.score += player.proposal;
@@ -110,6 +115,13 @@ class Ultimatum {
             }
             if (updateRule === 2) {
                 this.updateBiological(rect);
+            }
+            //if noise
+            if (r) {
+                const r1 = randomFloat(-r, r);
+                const r2 = randomFloat(-r, r);
+                rect.proposal += r1;
+                rect.acceptance += r2
             }
         }
     }    
