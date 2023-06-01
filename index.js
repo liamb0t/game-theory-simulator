@@ -36,7 +36,7 @@ let reproProb;
 let selectionProb;
 let updateRule = 0;
 let selfInteractions = false;
-let transitionSpeed = 7;
+let transitionSpeed = 59;
 let minRange = 0.25;
 let maxRange = 0.75;
 let neighbourhoodType = 0;
