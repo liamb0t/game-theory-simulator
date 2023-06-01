@@ -67,8 +67,8 @@ class Rect {
                 ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
             }
             //ctx.fillStyle = this.color;
-            ctx.shadowColor = '#1C646D';
-            ctx.shadowBlur = 25;
+            //ctx.shadowColor = '#1C646D';
+            //ctx.shadowBlur = 25;
             //ctx.strokeStyle = 'black';
             //ctx.strokeRect(this.x, this.y, this.width, this.height);
             if (this.strategy === 'empty') {
