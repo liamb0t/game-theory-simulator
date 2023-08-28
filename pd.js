@@ -3,7 +3,7 @@ class PrisonersDilemma {
         //0 = NEUMANN NEIGHBOURHOOD, 1 = MOORE NEIGHBOURHOOD, 2 = ?
         this.stratArray = [
             'Cu',
-            'Du',
+            'Du',   
             'empty'
         ]
         this.distributions = [0.5, 0.5, 0];

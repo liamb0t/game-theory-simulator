@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 20;
-let height = 20;
+let width = 15;
+let height = 15;
 let newWidth = 25
 let newHeight = 25
 let cellSize = height * width;
@@ -26,7 +26,7 @@ let wanderX = 5;
 let wanderY = 5;
 let game = new PrisonersDilemma(); 
 let drawMode = false;
-let z = 1;
+let z = 0.2;
 let popDensA = 0.5;
 let popDensB = 0.5;
 let popDensC = 0;
@@ -368,89 +368,41 @@ document.querySelector('#reset-button').onclick = function() {
 }
 //game select menu
 document.querySelector('#selectGameMenu').onchange = function() {
-    let p;
     if (this.value != 100) {
         const selectMenu = document.querySelector('#selectGameMenu');
         selectMenu[0].style.display = 'none';
     }
     if (this.value == 0) {
-        transitionSpeed = 15;
         game = new PrisonersDilemma();
-        p = document.querySelector('#game-info-pd');
-        document.querySelector('#editor-rules').style.display = 'block';
-        document.querySelector('#utility-functions').style.display = 'block';
-        document.querySelector('#cost').style.display = 'none';
-        document.querySelector('#segregation-rules').style.display = 'none';
-        document.querySelector('#bi-input-games-div').style.display = 'block';
-        document.querySelector('#tri-input-games-div').style.display = 'none';
-        document.querySelector('#popsimple-span1').innerHTML = 'Cooperator';
-        document.querySelector('#popsimple-span2').innerHTML = 'Defector';
+        loadConfig('pd')
     }
     if (this.value == 1) {
-        transitionSpeed = 30;
         game = new RPS();
-        p = document.querySelector('#game-info-rps');
-        document.querySelector('#editor-rules').style.display = 'block';
-        document.querySelector('#utility-functions').style.display = 'none';
-        document.querySelector('#segregation-rules').style.display = 'none';
-        document.querySelector('#bi-input-games-div').style.display = 'none';
-        document.querySelector('#tri-input-games-div').style.display = 'block';
-        document.querySelector('#pop-span1').innerHTML = 'Rock';
-        document.querySelector('#pop-span2').innerHTML = 'Paper';
-        document.querySelector('#pop-span3').innerHTML = 'Scissors';
+        loadConfig('rps')
     }
     if (this.value == 2) {
-        transitionSpeed = 10;
         game = new SegregationModel();
-        p = document.querySelector('#game-info-schelling');
-        document.querySelector('#editor-rules').style.display = 'none';
-        document.querySelector('#segregation-rules').style.display = 'block';
-        document.querySelector('#bi-input-games-div').style.display = 'none';
-        document.querySelector('#tri-input-games-div').style.display = 'block';
-        document.querySelector('#pop-span1').innerHTML = 'Orange';
-        document.querySelector('#pop-span2').innerHTML = 'Red';
-        document.querySelector('#pop-span3').innerHTML = 'Black';
+        loadConfig('segregation')
     }
     if (this.value == 3) {
-        transitionSpeed = 10;
         game = new Ultimatum();
-        p = document.querySelector('#game-info-ulti');
-        document.querySelector('#utility-functions').style.display = 'none';
-        document.querySelector('#segregation-rules').style.display = 'none';
+        loadConfig('ulti')
     }
-    //stag-hunt
     if (this.value == 4) {
-        transitionSpeed = 10;
         game = new StagHunt();
-        p = document.querySelector('#game-info-stag');
-        document.querySelector('#bi-input-games-div').style.display = 'block';
-        document.querySelector('#tri-input-games-div').style.display = 'none';
-        document.querySelector('#popsimple-span1').innerHTML = 'Hunt stag';
-        document.querySelector('#popsimple-span2').innerHTML = 'Hunt hare';
+        loadConfig('staghunt')
     }
     //hawk-dove
     if (this.value == 5) {
-        transitionSpeed = 10;
         game = new HawkDove();
-        p = document.querySelector('#game-info-hd');
-        document.querySelector('#editor-rules').style.display = 'block';
-        document.querySelector('#utility-functions').style.display = 'block';
-        document.querySelector('#cost').style.display = 'block';
-        document.querySelector('#segregation-rules').style.display = 'none';
-        document.querySelector('#bi-input-games-div').style.display = 'block';
-        document.querySelector('#tri-input-games-div').style.display = 'none';
-        document.querySelector('#popsimple-span1').innerHTML = 'Hawk';
-        document.querySelector('#popsimple-span2').innerHTML = 'Dove';
+        loadConfig('hd')
     }
+
     start = false;
-    stratArray = game.stratArray;
     updatePopulationDistribution(game.distributions, game.stratArray);
-    document.querySelectorAll('.game-info').forEach(p => {
-        p.style.display = 'none';
-    });
-    p.style.display = 'block';
     colors();
 }
+
 //change colors of a thing
 function colors() {
     let i = 0;

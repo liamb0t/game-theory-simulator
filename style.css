@@ -173,6 +173,7 @@ select {
     background-color: #1f0802;
     height: 25px;
     width: 25px;
+    border: none;
 }
 /***************
 THE PLAY CONTROLS
