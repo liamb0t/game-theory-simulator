@@ -179,13 +179,13 @@ document.querySelector('#play-button').onclick = function() {
     }
     else {
         start = true;
-        z = 2;
+        z = 0.52;
     }
 }
 
 document.querySelector('#pause-button').onclick = function() {
     start = false;
-    z = 1;
+    z = 0.2;
 }
 
 document.querySelector('#payoff').oninput = function() {
@@ -358,7 +358,7 @@ document.querySelector('#selfInteractionsBtn').onclick = function() {
 //reset the games game board
 document.querySelector('#reset-button').onclick = function() {
     start = false;
-    z = 1;
+    z = 0.2;
     if (game.stratArray.length === 3) {
         updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
     }

@@ -1,6 +1,15 @@
 configSettings = {
     'pd': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':`
+        Two criminals, Alice and Bob, are arrested. Separated by police, each is given two options:
+        1. Betray the other (Defector): If one betrays and the other stays silent, the betrayer goes free while the other gets 10 years.
+        2. Stay silent (Cooperator): If both stay silent, they each get 1 year.
+        3. If both betray, they each get 3 years.
+        
+        Individually, betrayal seems the best option. Collectively, staying silent is optimal. 
+        The Prisoner's Dilemma illustrates the tension between individual incentives and collective well-being. 
+        In many real-world situations, people face similar dilemmas where what's best for an individual might not be best for the group, and vice versa.
+        `,
         'payoff': 0.75,
         'strats' : [
             'Cooperator',
@@ -21,7 +30,14 @@ configSettings = {
         ,
     },
     'rps': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':`Players occupy lattice points and play Rock, Paper, or Scissors.
+        1. Rock crushes Scissors.
+        2. Scissors cuts Paper.
+        3. Paper covers Rock.
+
+        Each move defeats one and is defeated by another. No single move is dominant; the optimal choice depends on predicting an opponent's move. It exemplifies the unpredictability in zero-sum games.
+        
+        `,
         'payoff': 1.3,
         'strats' : [
             'Rock',
@@ -41,7 +57,12 @@ configSettings = {
         ,
     },
     'segregation': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':`Individuals of two types (e.g., A & B) are placed on a grid. Each individual prefers to have at least a certain percentage of their own type as neighbors. However, they don't necessarily prefer complete segregation.
+
+        When individuals find themselves uncomfortable (i.e., their neighborhood has too many of the other type), they move to a new spot.
+        
+        Surprisingly, even mild preferences for like-neighbors can lead to significant large-scale segregation. This model illustrates how small individual biases can result in unintended collective outcomes.`
+        ,
         'payoff': 1.3,
         'strats' : [
             'Rock',
