@@ -19,67 +19,39 @@ class Rect {
         this.proposal = parseFloat(Math.random().toFixed(2));
         this.acceptance = parseFloat(Math.random().toFixed(2));
 
-        this.calcRGBcolor = function(transitionSpeed) {
-            if (this.strategyNew == false) {
-                return this.color;
+        this.calcRGBcolor = transitionSpeed => {
+            if (!this.strategyNew) {
+                return;
             }
-            let r = this.colorRGB[0];
-            let g = this.colorRGB[1];
-            let b = this.colorRGB[2];
-            let newColor = colorDictRGB[this.strategyNew];
-            
-            if (this.colorRGB[0] > newColor[0] || this.colorRGB[1] > newColor[1] || this.colorRGB[2] > newColor[2]) {
-                if (this.colorRGB[0] - 1 >= newColor[0] && this.colorRGB[0] != newColor[0]) {
-                    r -= transitionSpeed;
-                }
-                if (this.colorRGB[1] - 1 >= newColor[1] && this.colorRGB[1] != newColor[1]) {
-                    g -= transitionSpeed;
-                
-                }
-                if (this.colorRGB[2] - 1 >= newColor[2] && this.colorRGB[2] != newColor[2]) {
-                    b -= transitionSpeed;
-                }
-            }
-            else if (this.colorRGB[0] < newColor[0] || this.colorRGB[1] < newColor[1] || this.colorRGB[2] < newColor[2]) {
-                if (this.colorRGB[0] + 1 <= newColor[0] && this.colorRGB[0] != newColor[0]) {
-                    r += transitionSpeed;
-                }
-                if (this.colorRGB[1] + 1 <= newColor[1] && this.colorRGB[1] != newColor[1]) {
-                    g += transitionSpeed;
-                
-                }
-                if (this.colorRGB[2] + 1 <= newColor[2] && this.colorRGB[2] != newColor[2]) {
-                    b += transitionSpeed;
-                }
-            }
-            this.colorRGB = [r, g, b];
-            return `rgb(${r}, ${g}, ${b})`;
-          }
 
-        this.draw = function() {
+            const [r, g, b] = this.colorRGB;
+            const newColor = colorDictRGB[this.strategyNew];
+
+            this.colorRGB = [r + (newColor[0] - r > 0 ? 1 : -1) * transitionSpeed,
+                             g + (newColor[1] - g > 0 ? 1 : -1) * transitionSpeed,
+                             b + (newColor[2] - b > 0 ? 1 : -1) * transitionSpeed];
+
+            return `rgb(${this.colorRGB[0]}, ${this.colorRGB[1]}, ${this.colorRGB[2]})`;
+        };
+
+        this.draw = () => {
             ctx.beginPath();
             if (document.querySelector('#selectGameMenu').value == 3) {
-                let hue = Math.sqrt(this.proposal);
-                let a = HSVtoRGB(hue % 1, 1, 1);
-                ctx.fillStyle = `rgb(${a[0]}, ${a[1]}, ${a[2]})`;
-            }
-            else {
+                const hue = Math.sqrt(this.proposal);
+                const [r, g, b] = HSVtoRGB(hue % 1, 1, 1);
+                ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+            } else {
                 ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
             }
-            //ctx.fillStyle = this.color;
-            //ctx.shadowColor = '#1C646D';
-            //ctx.shadowBlur = 25;
-            //ctx.strokeStyle = 'black';
-            //ctx.strokeRect(this.x, this.y, this.width, this.height);
+    
             if (this.strategy === 'empty') {
                 ctx.strokeRect(this.x, this.y, this.width, this.height);
-            }
-            else {
+            } else {
                 ctx.rect(this.x, this.y, this.width, this.height);
             }
-            
+
             ctx.fill();
-        }
+        };
 
         this.update = function() {
             //interactivity
@@ -127,7 +99,6 @@ class Rect {
                 //console.log('height', mouse.y, this.y + this.height)
                
                 this.strategy = stratArray[mouse.scrollCounter];
-                console.log(stratArray[mouse.scrollCounter]);
                 this.strategyNew = stratArray[mouse.scrollCounter];
                 this.score = 0;
             }
@@ -140,34 +111,28 @@ class Rect {
         }
         
         this.findNeighbours = function(gameBoard) {
-            let array = [];
-                
-            array.push(
-                [this.x + width, this.y], 
-                [this.x - width, this.y], 
-                [this.x, this.y + height],
-                [this.x , this.y - height],)
-            gameBoard.forEach(rect => {
-                array.forEach(coord => {
-                    if (rect.x == coord[0] && rect.y == coord[1]) {
-                        this.neighbours.push(rect);
-                    }
-                });
-            });
-            array = [];
-            array.push(
-                [this.x + width, this.y + height], 
-                [this.x - width, this.y + height], 
-                [this.x + width, this.y - height],
-                [this.x - width, this.y - height])
-            gameBoard.forEach(rect => {
-                array.forEach(coord => {
-                    if (rect.x == coord[0] && rect.y == coord[1]) {
-                        this.neighbours.push(rect);
-                    }
-                });
-            });
-        }
+            const offsets = [
+                [width, 0],
+                [-width, 0],
+                [0, height],
+                [0, -height],
+                [width, height],
+                [-width, height],
+                [width, -height],
+                [-width, -height],
+            ];
+            
+            for (const [offsetX, offsetY] of offsets) {
+                const targetX = this.x + offsetX;
+                const targetY = this.y + offsetY;
+        
+                const neighbor = gameBoard.find(rect => rect.x === targetX && rect.y === targetY);
+        
+                if (neighbor) {
+                    this.neighbours.push(neighbor);
+                }
+            }
+        };
     }  
 }
 

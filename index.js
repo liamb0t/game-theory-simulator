@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 15;
-let height = 15;
+let width = 10;
+let height = 10;
 let newWidth = 25
 let newHeight = 25
 let cellSize = height * width;
@@ -174,7 +174,7 @@ function updatePopulationDistribution(probabilities, strategies) {
 }
 //start game button
 document.querySelector('#play-button').onclick = function() {
-    if (document.querySelector('#selectGameMenu').value == 2 && popDensEmpty === 0) {
+    if (document.querySelector('#selectGameMenu').value == 2 && document.querySelector('#tri-slider4').value === 0) {
         window.alert("There needs to be at least one empty cell!");
     }
     else {
@@ -372,34 +372,34 @@ document.querySelector('#selectGameMenu').onchange = function() {
         const selectMenu = document.querySelector('#selectGameMenu');
         selectMenu[0].style.display = 'none';
     }
+    let config;
     if (this.value == 0) {
         game = new PrisonersDilemma();
-        loadConfig('pd')
+        config = loadConfig('pd')
     }
     if (this.value == 1) {
         game = new RPS();
-        loadConfig('rps')
+        config = loadConfig('rps')
     }
     if (this.value == 2) {
         game = new SegregationModel();
-        loadConfig('segregation')
+        config = loadConfig('segregation')
     }
     if (this.value == 3) {
         game = new Ultimatum();
-        loadConfig('ulti')
+        config = loadConfig('ulti')
     }
     if (this.value == 4) {
         game = new StagHunt();
-        loadConfig('staghunt')
+        config = loadConfig('staghunt')
     }
     //hawk-dove
     if (this.value == 5) {
         game = new HawkDove();
-        loadConfig('hd')
+        config = loadConfig('hd')
     }
-
     start = false;
-    updatePopulationDistribution(game.distributions, game.stratArray);
+    updatePopulationDistribution(config, game.stratArray);
     colors();
 }
 

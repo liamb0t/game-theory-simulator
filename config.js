@@ -10,14 +10,14 @@ configSettings = {
         The Prisoner's Dilemma illustrates the tension between individual incentives and collective well-being. 
         In many real-world situations, people face similar dilemmas where what's best for an individual might not be best for the group, and vice versa.
         `,
-        'payoff': 0.75,
+        'payoff': 0.85,
         'strats' : [
             'Cooperator',
             'Defector',
             'none'
         ],
-        'population': [0.33, 0.33, 0.34, 0],
-        'transitionSpeed': 15,
+        'population': [0.50, 0.50, 0, 0],
+        'transitionSpeed': 10,
         'selfinteract': true,
         'display': {
             'editor': 'block',
@@ -26,6 +26,7 @@ configSettings = {
             'input-bi': 'block',
             'input-tri': 'none',
             'cost': 'none',
+            'noise': 'none'
         }
         ,
     },
@@ -44,8 +45,8 @@ configSettings = {
             'Paper',
             'Scissors'
         ],
-        'population': [0.33, 0.33, 0.34, 0],
-        'transitionSpeed': 30,
+        'population': [0.33, 0.33, 0.33, 0],
+        'transitionSpeed': 15,
         'display': {
             'editor': 'block',
             'util': 'none',
@@ -153,12 +154,25 @@ loadConfig = (game) => {
     document.querySelector('#pop-span1').innerHTML = config['strats'][0]
     document.querySelector('#pop-span2').innerHTML = config['strats'][1]
     document.querySelector('#pop-span3').innerHTML = config['strats'][2]
+
+    document.querySelector('#pop-density-slider1').value = config['population'][0]
+    document.querySelector('#pop-density-slider2').value = config['population'][1]
+    document.querySelector('#pop-density-slider3').value = config['population'][2]
+
+    document.querySelector('#tri-slider1').value = config['population'][0]
+    document.querySelector('#tri-slider2').value = config['population'][1]
+    document.querySelector('#tri-slider3').value = config['population'][2]
+    document.querySelector('#tri-slider4').value = config['population'][3]
+
     document.querySelector('#selfInteractionsBtn').checked = config['selfinteract']
     document.querySelector('#editor-rules').style.display = config['display']['editor']
     document.querySelector('#utility-functions').style.display = config['display']['util']
-    document.querySelector('#cost').style.display = config['display']['cost']
+    document.querySelector('.cost-container').style.display = config['display']['cost']
+    document.querySelector('#noise-container').style.display = config['display']['noise']
     document.querySelector('#segregation-rules').style.display = config['display']['seg']
     document.querySelector('#bi-input-games-div').style.display = config['display']['input-bi']
     document.querySelector('#tri-input-games-div').style.display = config['display']['input-tri']
+
+    return config['population']
 }
 
