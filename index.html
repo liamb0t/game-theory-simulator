@@ -2,14 +2,13 @@
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
-        <title>EGT Simulator</title>
+        <title>Evolutionary Game Theory Visualizer</title>
     </head>
     <body>
         <div id="front-title">
-            <h1>
-                EVOLUTIONARY GAME THEORY SIMULATOR 
-            </h1>
-            <button id="open-page">Play</button>
+            <span class="loader"></span>
+            <span id="front-title-text"></span>
+            <span id="open-page">Begin</button>
         </div>
         <div id="editor-container">
             <div id="editor">
@@ -34,7 +33,7 @@
                     </div>
                     <br>
                     <div class="proportions" id="utility-functions">
-                        <span>Payoff from resource</span>
+                        <span class="payoff-slider-text">Payoff from defecting</span>
                         <input type="range" min="0.0" max="3" step="0.01" id="payoff" name="payoff" class="sliders" value="0.75">
                         <div class="cost-container">
                             <span>Cost of resource</span>

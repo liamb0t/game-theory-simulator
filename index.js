@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 10;
-let height = 10;
+let width = 14;
+let height = 14;
 let newWidth = 25
 let newHeight = 25
 let cellSize = height * width;
@@ -176,7 +176,7 @@ function updatePopulationDistribution(probabilities, strategies) {
 document.querySelector('#play-button').onclick = function() {
     if (document.querySelector('#selectGameMenu').value == 2 && document.querySelector('#tri-slider4').value === 0) {
         window.alert("There needs to be at least one empty cell!");
-    }
+    }   
     else {
         start = true;
         z = 0.52;
@@ -432,6 +432,7 @@ document.querySelector('#rows-input').onchange = function() {
 }
 
 document.querySelector('#open-page').onclick = function() {
+    document.querySelector('canvas').style.display = 'block'
     document.querySelector('#front-title').style.display = 'none';
     document.querySelector('#editor-container').style.display = 'block';
     document.querySelector('#play-container').style.display = 'block';

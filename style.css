@@ -10,22 +10,38 @@
 body {
     margin: 0;
     overflow: hidden;
+    background-color: #000000;
 }
-
 
 #front-title {
     position: absolute;
     top: 50%;
     left: 50%;
-    font-size: 45px;
     transform: translate(-50%, -50%);
-   
+}
+
+#open-page {
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 25px;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+#open-page:hover {
+    cursor: pointer;
 }
 /***************
 THE GRID
 ***************/
 
 #canvas {
+    display: none;
     background-color: #1C646D;
     cursor: crosshair;
 }
@@ -179,7 +195,7 @@ select {
 THE PLAY CONTROLS
 ***************/
 
-#play-container{
+#play-container {
     display: none;
 	padding: 10px 0;
     width: 80%;
@@ -190,26 +206,74 @@ THE PLAY CONTROLS
     background-color: rgba(202, 17, 17, 0);
 }
 
-#play-container button{
+#play-container button {
 	color: #d3d3d3;
     background-color: #1f0802;
     border: 1px solid var(--select-border);
     border-radius: 0.25em;
     padding: 0.25em 0.5em;
     font-family: myFirstFont;
-    font-size: 1.25rem;
     cursor: pointer;
     line-height: 1.1;
+    height: 100%;
 }
 
-#play-controls{
-	width: 745px;
+#play-container select {
+    height: 100%;
+}
+
+#play-container select, button {
+    margin-right: 0.5rem;
+}
+
+#play-controls {
 	height: 40px;
-	margin: 0 auto;
+	display: flex;
 	overflow: hidden;
+    justify-content: center;
 }
 
 #draw-mode-container img {
     width: 25;
     height: 25;
 }
+
+#update-rules-menu, #neighbours-menu {
+    margin-top: 0.5rem;
+}
+
+/***************
+FRONT PAGE STYLE
+***************/
+
+.loader {
+    width: 25rem;
+    height: 25rem;
+    display: inline-block;
+    position: relative;
+  }
+  .loader::after,
+  .loader::before {
+    content: '';  
+    box-sizing: border-box;
+    width: 25rem;
+    height: 25rem;
+    border: 2px solid rgb(56, 24, 76);
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation: rotation 2s ease-in-out infinite alternate;
+  }
+  .loader::after {
+    border-color: rgb(160, 205, 96);
+    animation-direction: alternate-reverse;
+  }
+  
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  } 
