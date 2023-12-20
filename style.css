@@ -20,7 +20,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-#open-page {
+#center-page {
     font-family: 'Courier New', Courier, monospace;
     color: white;
     position: absolute;
@@ -33,7 +33,19 @@ body {
     padding: 0;
 }
 
-#open-page:hover {
+#center-page a {
+    font-weight: 100;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+}
+
+#center-page a:hover {
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#center-page span:hover {
+    font-weight: 600;
     cursor: pointer;
 }
 /***************
@@ -42,7 +54,7 @@ THE GRID
 
 #canvas {
     display: none;
-    background-color: #1C646D;
+    background-color: #000000;
     cursor: crosshair;
 }
 
@@ -70,7 +82,7 @@ select {
 	position: absolute;
 	right: 0;
     overflow: auto;
-	background: #1f0802;
+	background: #000000c8;
 }
 
 #editor {
@@ -247,8 +259,8 @@ FRONT PAGE STYLE
 ***************/
 
 .loader {
-    width: 25rem;
-    height: 25rem;
+    width: 30rem;
+    height: 30rem;
     display: inline-block;
     position: relative;
   }
@@ -256,8 +268,8 @@ FRONT PAGE STYLE
   .loader::before {
     content: '';  
     box-sizing: border-box;
-    width: 25rem;
-    height: 25rem;
+    width: 30rem;
+    height: 30rem;
     border: 2px solid rgb(56, 24, 76);
     position: absolute;
     left: 0;

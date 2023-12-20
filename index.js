@@ -3,8 +3,8 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 14;
-let height = 14;
+let width = 9;
+let height = 7;
 let newWidth = 25
 let newHeight = 25
 let cellSize = height * width;
@@ -419,19 +419,20 @@ function colors() {
 //change the size of the grid
 document.querySelector('#cols-input').onchange = function() {
     width = parseInt(canvas.width/this.value);
-    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    cols = Math.floor(canvas.width / width);
     createGame();
     updatePopulationDistribution(game.distributions, game.stratArray);
 }
 
 document.querySelector('#rows-input').onchange = function() {
     height = parseInt(canvas.height/this.value);
+    rows = Math.floor(canvas.height / height);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     createGame();
     updatePopulationDistribution(game.distributions, game.stratArray);
 }
 
-document.querySelector('#open-page').onclick = function() {
+document.querySelector('#center-page span').onclick = function() {
     document.querySelector('canvas').style.display = 'block'
     document.querySelector('#front-title').style.display = 'none';
     document.querySelector('#editor-container').style.display = 'block';
