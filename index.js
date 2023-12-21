@@ -3,7 +3,7 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let width = 9;
+let width = 7;
 let height = 7;
 let newWidth = 25
 let newHeight = 25
@@ -141,7 +141,6 @@ function animate() {
         document.querySelector('#coop-counter').innerHTML = (popData[game.stratArray[0]]/(cols*rows) * 100).toFixed(2);
         document.querySelector('#defect-counter').innerHTML = (popData[game.stratArray[1]]/(cols*rows) * 100).toFixed(2);
     }
-    
 }
 
 function createGame() {

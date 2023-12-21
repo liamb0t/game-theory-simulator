@@ -38,7 +38,7 @@ class Rect {
             ctx.beginPath();
             if (document.querySelector('#selectGameMenu').value == 3) {
                 const hue = Math.sqrt(this.proposal);
-                const [r, g, b] = HSVtoRGB(hue % 1, 1, 1);
+                const [r, g, b] = xtoRGB(hue % 1, 1, 1);
                 ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
             } else {
                 ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
@@ -107,7 +107,6 @@ class Rect {
         this.gameBoardSizeChange = function() {
             const newX= newBoard[this.index].x;
             const newY= newBoard[this.index].y;
-            
         }
         
         this.findNeighbours = function(gameBoard) {
