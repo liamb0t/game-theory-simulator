@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="style.css">
         <title>Evolutionary Game Theory Visualizer</title>
+        <link rel="icon" type="image/x-icon" href="favicon.png">
     </head>
     <body>
         <div id="front-title">
@@ -13,6 +14,29 @@
                 <a href="https://github.com/liamb0t/liamb0t.github.io" target="_blank">github</a>
             </div>
         </div>
+
+        <div id="stats-container">
+            <div>
+                <span>Generations:</span>
+                <span id="generation-counter">0</span>
+            </div>
+            <div>
+                <span id="stat-label-1">Cooperators:</span>
+                <span id="coop-counter">0</span>
+                <span>%</span>
+            </div>
+            <div>
+                <span id="stat-label-2">Defectors:</span>
+                <span id="defect-counter">0</span>
+                <span>%</span>
+            </div>
+            <div id="stat-container-3" style="display: none;">
+                <span id="stat-label-3">Defectors:</span>
+                <span id="stat-counter-3">0</span>
+                <span>%</span>
+            </div>
+        </div>
+
         <div id="editor-container">
             <div id="editor">
                 <div>
@@ -93,10 +117,11 @@
                     <div class="proportions" id="bi-input-games-div">
                         <span id="popsimple-span1">Cooperators</span>
                         <input type="range" min = "0" max = "1" step="0.01" id="pop-density-slider1" name="pop-density-slider1" class="sliders">
-                        
+                        <input type="color" id="color5" class="colorpicker-2" data-strat="coop">
+
                         <span id="popsimple-span2">Defectors</span>
                         <input  type="range" min = "0" max = "1" step="0.01" id="pop-density-slider2" name="pop-density-slider2" class="sliders">
-                       
+                        <input type="color" id="color6" class="colorpicker-2" data-strat="defect">
 
                         <span id="popsimple-span3">Empty Cells</span>
                         
@@ -125,21 +150,31 @@
                         <option value="0">the 4 cells to it's sides</option>
                         <option value="1">the 8 cells to it's sides and corners</option>
                     </select>
-                    <div>
-                        <span>Adjust the size of a cell:</span>
-                        <input type="range" id="cellsize-slider" min="0" max="1000" step="1" class="sliders">
-                    </div>
                    
                 </div>
                 <hr>
+                    
+                <div id="editor-title">
+                    <span>THE DISPLAY</span>
+                </div>
                 <div>
-                    <span>Cooperators:</span>
-                    <span id="coop-counter">0</span>
-                    <span>%</span>
-                    <br>
-                    <span>Defectors:</span>
-                    <span id="defect-counter">0</span>
-                    <span>%</span>
+                    <span>Grid Style</span>
+                    <select id="display-style">
+                        <option value="1">Basic</option>
+                        <option value="2">Micro</option>
+                    </select>
+                    <div>
+                        <label for="toggle-stats-btn">Display game statistics</label>
+                        <input type="checkbox" id="toggle-stats-btn">
+                    </div>
+                    <div>
+                        <span>Cell border size</span>
+                        <input type="range" id="cellsize-slider" min="-5" max="0" step="1" class="sliders">
+                    </div>
+                    <div>
+                        <span>Blend</span>
+                        <input type="range" id="blend-slider" min="1" max="50" step="1" class="sliders">
+                    </div>
                 </div>
             </div>
         </div>

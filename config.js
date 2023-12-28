@@ -17,7 +17,7 @@ configSettings = {
             'none'
         ],
         'population': [0.50, 0.50, 0, 0],
-        'transitionSpeed': 10,
+        'transitionSpeed': 15,
         'selfinteract': true,
         'display': {
             'editor': 'block',
@@ -27,7 +27,8 @@ configSettings = {
             'input-tri': 'none',
             'cost': 'none',
             'noise': 'none'
-        }
+        },
+        'colorpicker': '.colorpicker-2'
         ,
     },
     'rps': {
@@ -54,8 +55,8 @@ configSettings = {
             'input-bi': 'none',
             'input-tri': 'block',
             'cost': 'none',
-        }
-        ,
+        },
+        'colorpicker': '.colorpicker'
     },
     'segregation': {
         'info':`Individuals of two types (e.g., A & B) are placed on a grid. Each individual prefers to have at least a certain percentage of their own type as neighbors. However, they don't necessarily prefer complete segregation.
@@ -70,7 +71,7 @@ configSettings = {
             'Paper',
             'Scissors'
         ],
-        'population': [0.33, 0.33, 0.24, 0.10],
+        'population': [0.33, 0.33, 0.20, 0.14],
         'transitionSpeed': 10,
         'display': {
             'editor': 'none',
@@ -79,8 +80,8 @@ configSettings = {
             'input-bi': 'none',
             'input-tri': 'block',
             'cost': 'none',
-        }
-        ,
+        },
+        'colorpicker': '.colorpicker'
     },
     'ulti': {
         'info':'The prisoners dilemma is an interesting game',
@@ -99,8 +100,7 @@ configSettings = {
             'input-bi': 'none',
             'input-tri': 'block',
             'cost': 'none',
-        }
-        ,
+        },
     },
     'stag': {
         'info':'The prisoners dilemma is an interesting game',
@@ -119,8 +119,8 @@ configSettings = {
             'input-bi': 'none',
             'input-tri': 'block',
             'cost': 'none',
-        }
-        ,
+        },
+        'colorpicker': '.colorpicker-2'
     },
     'hd': {
         'info':'The prisoners dilemma is an interesting game',
@@ -139,8 +139,8 @@ configSettings = {
             'input-bi': 'block',
             'input-tri': 'none',
             'cost': 'block',
-        }
-        ,
+        },
+        'colorpicker': '.colorpicker-2'
     },
 }
 
@@ -172,6 +172,19 @@ loadConfig = (game) => {
     document.querySelector('#segregation-rules').style.display = config['display']['seg']
     document.querySelector('#bi-input-games-div').style.display = config['display']['input-bi']
     document.querySelector('#tri-input-games-div').style.display = config['display']['input-tri']
+
+    document.querySelector('#stat-label-1').innerHTML = config['strats'][0]
+    document.querySelector('#stat-label-2').innerHTML = config['strats'][1]
+
+    if (config['strats'].length > 2 && game != 'pd') {
+        document.querySelector('#stat-container-3').style.display = 'block'
+        document.querySelector('#stat-label-3').innerHTML = config['strats'][2]
+    }
+    else {
+        document.querySelector('#stat-container-3').style.display = 'none'
+    }
+
+    colors(config['colorpicker'])
 
     return config['population']
 }

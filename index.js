@@ -41,6 +41,8 @@ let minRange = 0.25;
 let maxRange = 0.75;
 let neighbourhoodType = 0;
 let r = 0.005;
+let displayStyle = 2
+let borderSize = 0
 
 let colorDictRGB = {
     'Cu': [160, 205, 96], 
@@ -140,6 +142,8 @@ function animate() {
     if (generations % 5 === 0) {
         document.querySelector('#coop-counter').innerHTML = (popData[game.stratArray[0]]/(cols*rows) * 100).toFixed(2);
         document.querySelector('#defect-counter').innerHTML = (popData[game.stratArray[1]]/(cols*rows) * 100).toFixed(2);
+        document.querySelector('#generation-counter').innerHTML = generations
+        document.querySelector('#stat-counter-3').innerHTML = (100 - ((popData[game.stratArray[0]]/(cols*rows) * 100) + (popData[game.stratArray[1]]/(cols*rows) * 100))).toFixed(2)
     }
 }
 
@@ -162,15 +166,16 @@ function updatePopulationDistribution(probabilities, strategies) {
         probabilities, 
         10);
     rectsArray.forEach(rect => {
-        let replacingStrat = game.stratArray[randomIndex(pop_distribution)];
-        rect.strategy = replacingStrat
-        rect.strategyNew = replacingStrat
+        let randomStrat = game.stratArray[randomIndex(pop_distribution)];
+        rect.strategy = randomStrat
+        rect.strategyNew = randomStrat
         rect.color = colorDict[rect.strategy];
         rect.score = 0;
         rect.proposal = parseFloat(Math.random().toFixed(2));
         rect.acceptance = parseFloat(Math.random().toFixed(2));
     });
 }
+
 //start game button
 document.querySelector('#play-button').onclick = function() {
     if (document.querySelector('#selectGameMenu').value == 2 && document.querySelector('#tri-slider4').value === 0) {
@@ -300,18 +305,6 @@ slider7.oninput = function() {
     slider6.value = popDensC;
     updatePopulationDistribution([popDensA, popDensB, popDensC, popDensEmpty], game.stratArray);
 }
-//change the size of a cell
-document.querySelector('#cellsize-slider').oninput = function() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    if ((cols * rows) < 100000) {
-        if (height && width > 0) {
-            newHeight -= 1;
-            newWidth -= 1;
-        }
-    }
-    cols = Math.floor(canvas.width/width);
-    rows = Math.floor(canvas.height/height);
-}
 
 //segregation settings
 document.querySelector('#seg-threshold').onchange = function() {
@@ -357,6 +350,7 @@ document.querySelector('#selfInteractionsBtn').onclick = function() {
 //reset the games game board
 document.querySelector('#reset-button').onclick = function() {
     start = false;
+    generations = 0
     z = 0.2;
     if (game.stratArray.length === 3) {
         updatePopulationDistribution([popDensA, popDensB, popDensEmpty], game.stratArray);
@@ -399,13 +393,13 @@ document.querySelector('#selectGameMenu').onchange = function() {
     }
     start = false;
     updatePopulationDistribution(config, game.stratArray);
-    colors();
+    generations = 0
 }
 
 //change colors of a thing
-function colors() {
+function colors(colorPicker) {
     let i = 0;
-    document.querySelectorAll('.colorpicker').forEach(color => {
+    document.querySelectorAll(colorPicker).forEach(color => {
         color.dataset.strat = game.stratArray[i];
         color.value = colorDict[color.dataset.strat];
         color.onchange = function() {
@@ -445,3 +439,33 @@ game.distributions = [0, 0, 1];
 createGame();
 updatePopulationDistribution(game.distributions, game.stratArray);
 animate();
+
+//code for changing the display 
+
+document.querySelector('#display-style').onchange = function() {
+    displayStyle = parseInt(this.value)
+    if (displayStyle === 1) {
+        borderSize = 0
+        z = 0
+    }
+    else {
+        transitionSpeed = 10
+        borderSize = -5
+        z = 0.2
+    }
+}
+
+document.querySelector('#cellsize-slider').oninput = function() {
+    borderSize = parseInt(this.value)
+}
+
+document.querySelector('#blend-slider').oninput = function() {
+    transitionSpeed = this.value
+}
+
+document.querySelector('#toggle-stats-btn').onchange = function() {
+    const statsDisplay = document.querySelector('#stats-container')
+    statsDisplay.style.display === 'block' ? statsDisplay.style.display = 'none' : statsDisplay.style.display = 'block'
+}
+
+

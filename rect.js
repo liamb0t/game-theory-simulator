@@ -5,8 +5,8 @@ class Rect {
         this.y = y;
         this.originalX = x;
         this.originalY = y;
-        this.width = width - 5;
-        this.height = height - 5;
+        this.width = width;
+        this.height = height;
         this.maxHeight = height;
         this.maxWidth = width;
         this.strategy = stratArray[Math.floor(Math.random() * (stratArray.length - 1))];
@@ -45,16 +45,31 @@ class Rect {
             }
     
             if (this.strategy === 'empty') {
-                ctx.strokeRect(this.x, this.y, this.width, this.height);
+                
+                if (displayStyle === 1) {
+                    ctx.strokeRect(this.originalX, this.originalY, this.width + borderSize, this.height + borderSize);
+                }
+                else {
+                    ctx.strokeRect(this.x, this.y, this.width + borderSize, this.height + borderSize);
+                }
+               
             } else {
-                ctx.rect(this.x, this.y, this.width, this.height);
+                if (displayStyle === 1) {
+                    ctx.rect(this.originalX, this.originalY, this.width + borderSize, this.height + borderSize);
+                }
+                else {
+                    ctx.rect(this.x, this.y, this.width + borderSize, this.height + borderSize);
+                }
             }
 
             ctx.fill();
         };
 
         this.update = function() {
+          
+           
             //interactivity
+
             if (this.height > newHeight && this.width > newWidth) {
                 this.height -= 0.3;
                 this.width -= 0.3;
@@ -67,7 +82,7 @@ class Rect {
                     }
                 }
                 else {
-                    if (this.height > height - 5 && this.width > width - 5) {
+                    if (this.height > height - borderSize && this.width > width - borderSize) {
                         this.height -= 0.3;
                         this.width -= 0.3;
                     }
@@ -83,7 +98,10 @@ class Rect {
             if (this.y + dy < this.originalY + wanderY && this.y + dy > this.originalY - wanderY) {
                 this.y += dy;
             }
+        
+
             //drawing cells with mouse
+
             if (drawMode === true) {
                 this.handleClick();
             }
@@ -110,7 +128,7 @@ class Rect {
         }
         
         this.findNeighbours = function(gameBoard) {
-            const offsets = [
+            const directions = [
                 [width, 0],
                 [-width, 0],
                 [0, height],
@@ -121,7 +139,7 @@ class Rect {
                 [-width, -height],
             ];
             
-            for (const [offsetX, offsetY] of offsets) {
+            for (const [offsetX, offsetY] of directions) {
                 const targetX = this.x + offsetX;
                 const targetY = this.y + offsetY;
         

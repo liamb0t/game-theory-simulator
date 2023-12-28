@@ -195,7 +195,7 @@ select {
     display: none;
 }
 
-.colorpicker{
+.colorpicker, .colorpicker-2 {
     cursor: pointer;
     border-radius: 50%;
     background-color: #1f0802;
@@ -289,3 +289,19 @@ FRONT PAGE STYLE
       transform: rotate(360deg);
     }
   } 
+
+#stats-container {
+    position: absolute;
+    display: none;
+    top: 0;
+    left: 0;
+    color: #d3d3d3;
+    background-color: #1f0802b5;
+    padding: 0.25em 0.5em;
+    
+}
+
+#stats-container div span {
+    font-size: smaller;
+    font-family:'Courier New', Courier, monospace;
+}
