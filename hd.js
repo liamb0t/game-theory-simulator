@@ -8,12 +8,6 @@ class HawkDove {
         ]
         this.distributions = [0.5, 0.5];
         this.bioSettings = [0.1, 0.5, 0.4];
-        this.payoffs = {
-            'mutualCoop': 1,
-            'defectorsPayoff': 1,
-            'mutualDefect': -1,
-            'suckersPayoff': -1,
-        }
 
         this.sliceNeighbours = function(rect) {
             let neighbours = undefined;

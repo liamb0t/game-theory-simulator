@@ -48,7 +48,7 @@ class StagHunt {
                     score += 0
                 }
                 if (neighbour.strategy == 'stag' && rect.strategy == 'hare') {
-                    score += 1
+                    score += 2
                 }
             });
             rect.score = score;

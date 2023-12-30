@@ -84,7 +84,7 @@ configSettings = {
         'colorpicker': '.colorpicker'
     },
     'ulti': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':'In the Ultimatum Game, two players must decide how to split a sum of money. Player one proposes a division, and player two can either accept or reject the offer. If rejected, both players receive nothing. This game highlights the tension between fairness and self-interest, as unfair proposals risk rejection.',
         'payoff': 1.3,
         'strats' : [
             'Rock',
@@ -103,7 +103,7 @@ configSettings = {
         },
     },
     'stag': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':'In the Stag Hunt, players must choose between hunting a stag (cooperative strategy with a high payoff) or a hare (selfish strategy with a lower payoff). The game illustrates the dilemma of cooperation, where individuals must trust others to choose the mutually beneficial option rather than pursuing immediate personal gain.',
         'payoff': 1.3,
         'strats' : [
             'Stag',
@@ -113,17 +113,17 @@ configSettings = {
         'population': [0.33, 0.33, 0.24, 0.10],
         'transitionSpeed': 0.2,
         'display': {
-            'editor': 'none',
-            'util': 'none',
-            'seg': 'block',
-            'input-bi': 'none',
-            'input-tri': 'block',
-            'cost': 'none',
+            'editor': 'block',
+            'util': 'block',
+            'seg': 'none',
+            'input-bi': 'block',
+            'input-tri': 'none',
+            'cost': 'block',
         },
         'colorpicker': '.colorpicker-2'
     },
     'hd': {
-        'info':'The prisoners dilemma is an interesting game',
+        'info':'The Hawk-Dove Game models strategic interactions where individuals can choose between aggressive (Hawk) or passive (Dove) behaviors. Hawks always fight for resources, while Doves avoid conflict. The game explores the balance between competition and cooperation within a population.',
         'payoff': 1.3,
         'strats' : [
             'Hawk',
@@ -155,6 +155,10 @@ loadConfig = (game) => {
     document.querySelector('#pop-span2').innerHTML = config['strats'][1]
     document.querySelector('#pop-span3').innerHTML = config['strats'][2]
 
+    document.querySelector('#popsimple-span1').innerHTML = config['strats'][0]
+    document.querySelector('#popsimple-span2').innerHTML = config['strats'][1]
+    document.querySelector('#popsimple-span3').innerHTML = config['strats'][2]
+
     document.querySelector('#pop-density-slider1').value = config['population'][0]
     document.querySelector('#pop-density-slider2').value = config['population'][1]
     document.querySelector('#pop-density-slider3').value = config['population'][2]
@@ -182,6 +186,14 @@ loadConfig = (game) => {
     }
     else {
         document.querySelector('#stat-container-3').style.display = 'none'
+    }
+
+    if (game === 'hd') {
+        document.querySelector('.payoff-slider-text').innerHTML = 'Payoff from Resource'
+    }
+
+    if (game === 'pd') {
+        document.querySelector('.payoff-slider-text').innerHTML = 'Payoff from Defecting'
     }
 
     colors(config['colorpicker'])

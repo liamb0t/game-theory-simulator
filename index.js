@@ -15,6 +15,7 @@ const mouse = {
     x: undefined,
     y: undefined,
     buttons: undefined,
+    target: undefined
 }
 
 let generations = 0;
@@ -60,7 +61,7 @@ let colorDictRGB = {
     'responder': [56, 24, 76],
     'stag': [160, 205, 96],
     'hare': [56, 24, 76],
-    'hawk': [217, 37, 37],
+    'hawk': [240, 7, 7],
     'dove': [242, 242, 242],
 }
 
@@ -80,8 +81,8 @@ let colorDict = {
     'responder': '#38184C',
     'stag': '#A0CD60',  
     'hare': '#38184C',
-    'hawk': '#F2F2F2', 
-    'dove': '##D92525',
+    'hawk': '#f00707', 
+    'dove': '#F4F4F4',
 }
 
 let popData = {
@@ -111,7 +112,10 @@ window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;
     mouse.y = event.y;
     mouse.buttons = event.buttons;
-    //console.log(mouse)
+})
+
+window.addEventListener('click', function(event) {
+    mouse.target = event.target
 })
 
 function animate() {
@@ -202,7 +206,6 @@ document.querySelector('#cost').oninput = function() {
 
 document.querySelector('#draw-button').onclick = function() {
 
-   
     if (thingToDrawCounter + 1 < game.stratArray.length) {
         thingToDrawCounter += 1
     }
@@ -211,7 +214,7 @@ document.querySelector('#draw-button').onclick = function() {
     }
 
     console.log(colorDictRGB[stratArray[thingToDrawCounter]])
-    document.querySelector('#draw-square').style.backgroundColor = colorDict[stratArray[thingToDrawCounter]]
+    document.querySelector('#draw-square').style.backgroundColor = colorDict[game.stratArray[thingToDrawCounter]]
 }
 
 document.querySelector('#neighbours-menu').onchange = function() {
@@ -376,7 +379,7 @@ document.querySelector('#selectGameMenu').onchange = function() {
     }
     if (this.value == 4) {
         game = new StagHunt();
-        config = loadConfig('staghunt')
+        config = loadConfig('stag')
     }
     //hawk-dove
     if (this.value == 5) {
@@ -386,6 +389,8 @@ document.querySelector('#selectGameMenu').onchange = function() {
     start = false;
     updatePopulationDistribution(config, game.stratArray);
     generations = 0
+    document.querySelector('#draw-square').style.backgroundColor = colorDict[game.stratArray[0]]
+    thingToDrawCounter = 0
 }
 
 //change colors of a thing
@@ -458,4 +463,17 @@ document.querySelector('#toggle-stats-btn').onchange = function() {
     statsDisplay.style.display === 'block' ? statsDisplay.style.display = 'none' : statsDisplay.style.display = 'block'
 }
 
+// document.querySelector('#toggle-editor').onclick = function() {
+    
+//     const isToggled = this.dataset.isopen
+//     const editor = document.querySelector('#editor-container')
 
+//     if (isToggled === 'true') {
+//         editor.style.display = 'none'
+//         this.dataset.isopen = 'false'
+//     }
+//     else if (isToggled === 'false') {
+//         editor.style.display = 'block'
+//         this.dataset.isopen = 'true'
+//     }
+// }

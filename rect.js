@@ -40,7 +40,7 @@ class Rect {
             ctx.beginPath();
             if (document.querySelector('#selectGameMenu').value == 3) {
                 const hue = Math.sqrt(this.proposal);
-                const [r, g, b] = xtoRGB(hue % 1, 1, 1);
+                const [r, g, b] = HSVtoRGB(hue % 1, 1, 1);
                 ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
             } else {
                 ctx.fillStyle = this.calcRGBcolor(transitionSpeed);
@@ -98,10 +98,7 @@ class Rect {
             if (this.y + dy < this.originalY + wanderY && this.y + dy > this.originalY - wanderY) {
                 this.y += dy;
             }
-        
-
             //drawing cells with mouse
-
             this.handleClick();
             
             //update cell
@@ -109,6 +106,11 @@ class Rect {
         }
 
         this.handleClick = function() {
+
+            if (mouse.target != canvas) {
+                return
+            }
+
             if (mouse.buttons !== 1) return;
         
             // Adjust the clickable area by adding or subtracting values
@@ -121,8 +123,8 @@ class Rect {
                 (mouse.x >= expandedX && mouse.x <= expandedX + expandedWidth) &&
                 (mouse.y >= expandedY && mouse.y <= expandedY + expandedHeight)
             ) {
-                this.strategy = stratArray[thingToDrawCounter];
-                this.strategyNew = stratArray[thingToDrawCounter];
+                this.strategy = game.stratArray[thingToDrawCounter];
+                this.strategyNew = game.stratArray[thingToDrawCounter];
                 this.score = 0;
             }
         }

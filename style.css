@@ -262,6 +262,15 @@ THE PLAY CONTROLS
     margin-top: 0.5rem;
 }
 
+#toggle-editor {
+    font-size: larger;
+    color: white;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 999;
+}
+
 /***************
 FRONT PAGE STYLE
 ***************/
