@@ -24,14 +24,16 @@ class Rect {
                 return;
             }
 
-            const [r, g, b] = this.colorRGB;
-            const newColor = colorDictRGB[this.strategyNew];
+            const [r1, g1, b1] = this.colorRGB;
+            const [r2, g2, b2] = colorDictRGB[this.strategyNew];
+            
+            this.colorRGB = [
+                Math.round((r2 - r1) * transitionSpeed + r1), 
+                Math.round((g2 - g1) * transitionSpeed + g1),
+                Math.round((b2 - b1) * transitionSpeed + b1)
+            ]
 
-            this.colorRGB = [r + (newColor[0] - r > 0 ? 1 : -1) * transitionSpeed,
-                             g + (newColor[1] - g > 0 ? 1 : -1) * transitionSpeed,
-                             b + (newColor[2] - b > 0 ? 1 : -1) * transitionSpeed];
-
-            return `rgb(${this.colorRGB[0]}, ${this.colorRGB[1]}, ${this.colorRGB[2]})`;
+            return `rgb(${this.colorRGB[0]}, ${ this.colorRGB[1]}, ${ this.colorRGB[2]})`;
         };
 
         this.draw = () => {
@@ -61,13 +63,11 @@ class Rect {
                     ctx.rect(this.x, this.y, this.width + borderSize, this.height + borderSize);
                 }
             }
-
             ctx.fill();
         };
 
         this.update = function() {
-          
-           
+        
             //interactivity
 
             if (this.height > newHeight && this.width > newWidth) {
@@ -102,25 +102,31 @@ class Rect {
 
             //drawing cells with mouse
 
-            if (drawMode === true) {
-                this.handleClick();
-            }
+            this.handleClick();
+            
             //update cell
             this.draw();
         }
 
         this.handleClick = function() {
             if (mouse.buttons !== 1) return;
-
-            if ((mouse.x >= this.x && mouse.x <= this.x + this.width) && (mouse.y >= this.y && mouse.y <= this.y + this.height)) {
-                //console.log('width', mouse.x, this.x + this.width);
-                //console.log('height', mouse.y, this.y + this.height)
-               
-                this.strategy = stratArray[mouse.scrollCounter];
-                this.strategyNew = stratArray[mouse.scrollCounter];
+        
+            // Adjust the clickable area by adding or subtracting values
+            var expandedX = this.x - 15; // Adjust as needed
+            var expandedY = this.y - 15; // Adjust as needed
+            var expandedWidth = this.width + 50; // Adjust as needed
+            var expandedHeight = this.height + 50; // Adjust as needed
+        
+            if (
+                (mouse.x >= expandedX && mouse.x <= expandedX + expandedWidth) &&
+                (mouse.y >= expandedY && mouse.y <= expandedY + expandedHeight)
+            ) {
+                this.strategy = stratArray[thingToDrawCounter];
+                this.strategyNew = stratArray[thingToDrawCounter];
                 this.score = 0;
             }
         }
+        
 
         this.gameBoardSizeChange = function() {
             const newX= newBoard[this.index].x;

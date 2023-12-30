@@ -245,10 +245,18 @@ THE PLAY CONTROLS
     justify-content: center;
 }
 
-#draw-mode-container img {
-    width: 25;
-    height: 25;
+#draw-button {
+    display: flex;
+    align-items: center;
 }
+
+#draw-square {
+    background-color: green;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.25rem;
+}
+
 
 #update-rules-menu, #neighbours-menu {
     margin-top: 0.5rem;

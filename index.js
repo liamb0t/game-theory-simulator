@@ -15,7 +15,6 @@ const mouse = {
     x: undefined,
     y: undefined,
     buttons: undefined,
-    scrollCounter: 2,
 }
 
 let generations = 0;
@@ -36,13 +35,14 @@ let reproProb;
 let selectionProb;
 let updateRule = 0;
 let selfInteractions = false;
-let transitionSpeed = 59;
+let transitionSpeed = 1
 let minRange = 0.25;
 let maxRange = 0.75;
 let neighbourhoodType = 0;
 let r = 0.005;
 let displayStyle = 2
 let borderSize = 0
+let thingToDrawCounter = 0
 
 let colorDictRGB = {
     'Cu': [160, 205, 96], 
@@ -201,12 +201,17 @@ document.querySelector('#cost').oninput = function() {
 }
 
 document.querySelector('#draw-button').onclick = function() {
-    if (drawMode === false) {
-        drawMode = true;
+
+   
+    if (thingToDrawCounter + 1 < game.stratArray.length) {
+        thingToDrawCounter += 1
     }
     else {
-        drawMode = false;
+        thingToDrawCounter = 0
     }
+
+    console.log(colorDictRGB[stratArray[thingToDrawCounter]])
+    document.querySelector('#draw-square').style.backgroundColor = colorDict[stratArray[thingToDrawCounter]]
 }
 
 document.querySelector('#neighbours-menu').onchange = function() {
@@ -315,19 +320,6 @@ document.querySelector('#noise').onchange = function() {
     r = parseFloat(this.value);
 }
 
-//mousewheel scroll functions
-window.addEventListener('wheel', function(event){
-    if (drawMode === true) {
-        if (event.deltaY < 0 && mouse.scrollCounter < stratArray.length) {
-            mouse.scrollCounter += 1;
-        }
-        if (event.deltaY > 0 && mouse.scrollCounter > 0) {
-            mouse.scrollCounter -= 1;
-        }
-        document.querySelector('#draw-mode-icon').src = `img/draw-mode-icon-${mouse.scrollCounter}.png`;
-    }
-})
-
 document.querySelector('#update-rules-menu').onchange = function() {
     updateRule = parseInt(this.value);
     if (updateRule === 2) {
@@ -430,7 +422,6 @@ document.querySelector('#center-page span').onclick = function() {
     document.querySelector('#front-title').style.display = 'none';
     document.querySelector('#editor-container').style.display = 'block';
     document.querySelector('#play-container').style.display = 'block';
-    transitionSpeed = 5;
     updatePopulationDistribution(game.distributions, game.stratArray);
     
 }
@@ -449,7 +440,6 @@ document.querySelector('#display-style').onchange = function() {
         z = 0
     }
     else {
-        transitionSpeed = 10
         borderSize = -5
         z = 0.2
     }

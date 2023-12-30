@@ -17,7 +17,7 @@ configSettings = {
             'none'
         ],
         'population': [0.50, 0.50, 0, 0],
-        'transitionSpeed': 15,
+        'transitionSpeed': 0.2,
         'selfinteract': true,
         'display': {
             'editor': 'block',
@@ -47,7 +47,7 @@ configSettings = {
             'Scissors'
         ],
         'population': [0.33, 0.33, 0.33, 0],
-        'transitionSpeed': 15,
+        'transitionSpeed': 0.2,
         'display': {
             'editor': 'block',
             'util': 'none',
@@ -72,7 +72,7 @@ configSettings = {
             'Scissors'
         ],
         'population': [0.33, 0.33, 0.20, 0.14],
-        'transitionSpeed': 10,
+        'transitionSpeed': 0.2,
         'display': {
             'editor': 'none',
             'util': 'none',
@@ -92,7 +92,7 @@ configSettings = {
             'Scissors'
         ],
         'population': [0.33, 0.33, 0.24, 0.10],
-        'transitionSpeed': 10,
+        'transitionSpeed': 0.2,
         'display': {
             'editor': 'none',
             'util': 'none',
@@ -111,7 +111,7 @@ configSettings = {
             'none'
         ],
         'population': [0.33, 0.33, 0.24, 0.10],
-        'transitionSpeed': 10,
+        'transitionSpeed': 0.2,
         'display': {
             'editor': 'none',
             'util': 'none',
@@ -131,7 +131,7 @@ configSettings = {
             'none'
         ],
         'population': [0.33, 0.33, 0.24, 0.10],
-        'transitionSpeed': 10,
+        'transitionSpeed': 0.2,
         'display': {
             'editor': 'block',
             'util': 'block',

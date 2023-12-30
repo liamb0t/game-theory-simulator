@@ -173,7 +173,7 @@
                     </div>
                     <div>
                         <span>Blend</span>
-                        <input type="range" id="blend-slider" min="1" max="50" step="1" class="sliders">
+                        <input type="range" id="blend-slider" min="0.05" max="1" step="0.001" class="sliders">
                     </div>
                 </div>
             </div>
@@ -193,10 +193,11 @@
                     <option value="5">Hawk-Dove</option>
                 </select>
                 <button id="pause-button">Pause game</button>
-                <button id="draw-button">Draw Mode</button>
-                <div>
-                    <img id="draw-mode-icon" src="img/draw-mode-icon-2.png" width="25" height="25">
-                </div>
+                <button id="draw-button" style="display: flex;">
+                    Draw
+                    <div id="draw-square"></div>
+                </button>
+               
             </div>
         </div>
 
