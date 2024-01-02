@@ -14,7 +14,7 @@ configSettings = {
         'strats' : [
             'Cooperator',
             'Defector',
-            'none'
+            'Empty'
         ],
         'population': [0.50, 0.50, 0, 0],
         'transitionSpeed': 0.2,
@@ -108,7 +108,7 @@ configSettings = {
         'strats' : [
             'Stag',
             'Hare',
-            'none'
+            'Empty'
         ],
         'population': [0.33, 0.33, 0.24, 0.10],
         'transitionSpeed': 0.2,
@@ -128,7 +128,7 @@ configSettings = {
         'strats' : [
             'Hawk',
             'Dove',
-            'none'
+            'Empty'
         ],
         'population': [0.33, 0.33, 0.24, 0.10],
         'transitionSpeed': 0.2,

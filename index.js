@@ -48,8 +48,8 @@ let thingToDrawCounter = 0
 let colorDictRGB = {
     'Cu': [160, 205, 96], 
     'Du': [56, 24, 76],
-    'wasCu': [31, 8, 2], 
-    'wasDu': [206, 240, 157],
+    'wasCu': [0, 21, 250], 
+    'wasDu': [246, 250, 0],
     'empty': [28, 100, 109],
     'rock': [242, 5, 116],
     'paper': [4, 217, 217],
@@ -68,8 +68,8 @@ let colorDictRGB = {
 let colorDict = {
     'Cu': '#A0CD60', 
     'Du': '#38184C',
-    'wasCu': '#1F0802', 
-    'wasDu': '#CEF09D',
+    'wasCu': '#0015fa', 
+    'wasDu': '#f6fa00',
     'empty': '#1C646D', 
     'rock': '#F20574', 
     'paper': '#04D9D9',
@@ -138,6 +138,7 @@ function animate() {
         //updating double buffer needs to be refactored
         for (var i = 0; i < rectsArray.length; i++) {
             rectsArray[i].strategy = rectsArray[i].strategyNew;
+
             popData[rectsArray[i].strategy] += 1;
             //rectsArray[i].color = colorDict[rectsArray[i].strategy];
         }

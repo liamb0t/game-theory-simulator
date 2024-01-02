@@ -18,12 +18,14 @@ class Rect {
         this.counter = 0;
         this.proposal = parseFloat(Math.random().toFixed(2));
         this.acceptance = parseFloat(Math.random().toFixed(2));
+        this.wasDu = false
+        this.wasCu = false
 
         this.calcRGBcolor = transitionSpeed => {
             if (!this.strategyNew) {
                 return;
             }
-
+            
             const [r1, g1, b1] = this.colorRGB;
             const [r2, g2, b2] = colorDictRGB[this.strategyNew];
             
