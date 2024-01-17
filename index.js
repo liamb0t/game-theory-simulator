@@ -42,7 +42,7 @@ let maxRange = 0.75;
 let neighbourhoodType = 0;
 let r = 0.005;
 let displayStyle = 2
-let borderSize = 0
+let borderSize = -5
 let thingToDrawCounter = 0
 
 let colorDictRGB = {
