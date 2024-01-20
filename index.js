@@ -3,6 +3,14 @@ const ctx = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+if (canvas.width > 2000) {
+    canvas.width = 1900
+}
+
+if (canvas.height > 1500) {
+    canvas.height = 1500
+}
+
 let width = 7;
 let height = 7;
 let newWidth = 25
@@ -107,6 +115,10 @@ let popData = {
 
 let stratArray = game.stratArray;
 let rectsArray = [];
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('begin-button').innerHTML = 'Begin'
+})
 
 window.addEventListener('mousemove', function(event) {
     mouse.x = event.x;

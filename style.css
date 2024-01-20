@@ -13,6 +13,10 @@ body {
     background-color: #000000;
 }
 
+#main-container {
+    display: flex;
+}
+
 #front-title {
     position: absolute;
     top: 50%;
@@ -52,6 +56,11 @@ body {
 THE GRID
 ***************/
 
+#canvas-container {
+    position: relative; 
+    width: 75%;
+}
+
 #canvas {
     display: none;
     background-color: #000000;
@@ -73,16 +82,15 @@ select {
 }
 
 #editor-container{
+    position: absolute;
+    right: 0;
+    width: 25%;
     color: white;
     font-family: myFirstFont;
-	min-width: 340px;
-	width: 20%;
 	height: 100%;
     display: none;
-	position: absolute;
-	right: 0;
     overflow: auto;
-	background: #000000c8;
+	background: #0000003b;
 }
 
 #editor {
@@ -208,13 +216,14 @@ THE PLAY CONTROLS
 ***************/
 
 #play-container {
+    position: absolute;
+    width: 100%;
     display: none;
 	padding: 10px 0;
-    width: 80%;
     height: 40px;
     position: absolute;
-    left: 0;
     bottom: 0;
+    margin: auto 0;
     background-color: rgba(202, 17, 17, 0);
 }
 
