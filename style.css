@@ -328,7 +328,7 @@ FRONT PAGE STYLE
     color: #d3d3d3;
     background-color: #1f0802b5;
     padding: 0.25em 0.5em;
-    
+    z-index: 999;
 }
 
 #stats-container div span {
