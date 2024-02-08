@@ -2,9 +2,11 @@ configSettings = {
     'pd': {
         'info':`
         Two criminals, Alice and Bob, are arrested. Separated by police, each is given two options:
-        1. Betray the other (Defector): If one betrays and the other stays silent, the betrayer goes free while the other gets 10 years.
-        2. Stay silent (Cooperator): If both stay silent, they each get 1 year.
-        3. If both betray, they each get 3 years.
+        1. Betray the other (Defector).
+        2. Stay silent (Cooperator).
+        If one betrays and the other stays silent, the betrayer goes free while the other gets 10 years.
+        If both stay silent, they each get 1 year.
+        If both betray, they each get 3 years.
         
         Individually, betrayal seems the best option. Collectively, staying silent is optimal. 
         The Prisoner's Dilemma illustrates the tension between individual incentives and collective well-being. 

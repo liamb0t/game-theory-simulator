@@ -4,11 +4,18 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 if (canvas.width > 2000) {
-    canvas.width = 1900
+    canvas.width = 1800
+    
+    document.querySelector('#main-container').style.width = '75%'
+    document.querySelector('#main-container').style.height = '100vh'
+    document.querySelector('#canvas-container').style.alignItems = 'center'
+    document.querySelector('#canvas-container').style.justifyContent = 'center'
+    document.querySelector('#canvas-container').style.width = '100%'
+    document.querySelector('canvas').style.border = '1px solid gainsboro'
 }
 
 if (canvas.height > 1500) {
-    canvas.height = 1500
+    canvas.height = 900
 }
 
 let width = 7;
