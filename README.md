@@ -17,15 +17,6 @@ Players cycle between strategies because there is no dominant strategy in rock-p
 ### Segregation
 More famous in economics than in game theory, players choose to move to an empty space if they are dissatisfied with the percentage of similar types of players in their neighborhood.
 
-### Ultimatum Game
-*(Game description missing)*
-
-### Stag Hunt
-*(Game description missing)*
-
-### Hawk Dove
-*(Game description missing)*
-
 ## The Rules
 
 Players can update their strategies based on three separate rules:
